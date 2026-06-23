@@ -9,58 +9,44 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --white:#FFFFFF;
-  --beige:#C8B89A;
-  --dark:#1E1E1C;
-  --mid:#6B6B69;
-  --light:#F9F7F5;
-  --border:#E8E2DA;
-  --nav:64px;
+  --white:#FFFFFF;--beige:#C8B89A;--dark:#1E1E1C;
+  --mid:#6B6B69;--light:#F9F7F5;--border:#E8E2DA;--nav:64px;
 }
 html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
 body{font-family:'Jost',sans-serif;background:var(--white);color:var(--dark);font-weight:300;line-height:1.6;font-size:15px}
 
 /* ── NAV ── */
-nav{
-  position:fixed;top:0;left:0;right:0;z-index:100;
-  height:var(--nav);
-  background:rgba(255,255,255,0.96);
-  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
-  border-bottom:1px solid var(--border);
-  display:flex;align-items:center;justify-content:space-between;
-  padding:0 48px;
-}
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav);background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);display:flex;align-items:center;justify-content:space-between;padding:0 48px}
 .nav-logo{font-family:'Pinyon Script',cursive;font-size:34px;color:var(--dark);text-decoration:none;line-height:1}
 .nav-center{display:flex;gap:32px;list-style:none}
 .nav-center a{font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--dark);text-decoration:none;cursor:pointer;transition:color .2s}
 .nav-center a:hover{color:var(--beige)}
-.nav-cart{background:none;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dark);display:flex;align-items:center;gap:7px}
-.cart-dot{width:18px;height:18px;background:var(--dark);border-radius:50%;color:white;font-size:10px;display:flex;align-items:center;justify-content:center;transition:background .2s}
-.cart-dot.active{background:var(--beige)}
 
-/* Mobile nav */
-.nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:5px}
+/* Birkin bag cart button */
+.nav-cart-btn{background:none;border:none;cursor:pointer;display:flex;align-items:center;gap:8px;padding:0;position:relative}
+.birkin-icon{width:28px;height:24px;display:block;transition:opacity .2s}
+.nav-cart-btn:hover .birkin-icon{opacity:.6}
+.cart-count-badge{
+  position:absolute;top:-6px;right:-8px;
+  background:var(--beige);color:white;
+  border-radius:50%;width:16px;height:16px;
+  font-size:9px;display:none;align-items:center;justify-content:center;
+  font-family:'Jost',sans-serif;font-weight:400;
+}
+.cart-count-badge.visible{display:flex}
+
+.nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:5px;margin-left:16px}
 .nav-hamburger span{display:block;width:22px;height:1px;background:var(--dark);transition:all .3s}
 .nav-hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
 .nav-hamburger.open span:nth-child(2){opacity:0}
 .nav-hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 
-/* Mobile menu overlay */
-.mob-overlay{
-  display:none;position:fixed;inset:0;z-index:99;
-  background:var(--white);
-  padding-top:var(--nav);
-  flex-direction:column;justify-content:center;align-items:center;
-}
+.mob-overlay{display:none;position:fixed;inset:0;z-index:99;background:var(--white);padding-top:var(--nav);flex-direction:column;justify-content:center;align-items:center}
 .mob-overlay.open{display:flex}
 .mob-overlay ul{list-style:none;text-align:center;width:100%}
 .mob-overlay ul li{border-bottom:1px solid var(--border)}
 .mob-overlay ul li:first-child{border-top:1px solid var(--border)}
-.mob-overlay ul a{
-  display:block;padding:20px 40px;
-  font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;font-style:italic;
-  color:var(--dark);text-decoration:none;cursor:pointer;
-}
+.mob-overlay ul a{display:block;padding:20px 40px;font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;font-style:italic;color:var(--dark);text-decoration:none;cursor:pointer}
 .mob-overlay ul a:active{color:var(--beige)}
 
 /* ── PAGES ── */
@@ -68,37 +54,12 @@ nav{
 .page.active{display:block}
 
 /* ── HERO ── */
-.hero{
-  height:calc(100vh - var(--nav));
-  position:relative;overflow:hidden;
-  display:flex;align-items:flex-end;
-  background:linear-gradient(145deg,#EDE6DA,#C8B89A);
-}
-.hero-placeholder{
-  position:absolute;inset:0;
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:13px;letter-spacing:.22em;text-transform:uppercase;
-  color:rgba(255,255,255,.5);text-align:center;line-height:2.2;
-}
-.hero-content{
-  position:relative;z-index:2;
-  padding:56px 64px;max-width:540px;
-}
+.hero{height:calc(100vh - var(--nav));position:relative;overflow:hidden;display:flex;align-items:flex-end;background:linear-gradient(145deg,#EDE6DA,#C8B89A)}
+.hero-placeholder{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;letter-spacing:.22em;text-transform:uppercase;color:rgba(255,255,255,.5);text-align:center;line-height:2.2}
+.hero-content{position:relative;z-index:2;padding:56px 64px;max-width:540px}
 .hero-eyebrow{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--beige);margin-bottom:16px;display:block}
-.hero-tagline{
-  font-family:'Cormorant Garamond',serif;
-  font-size:clamp(32px,4.2vw,54px);
-  font-weight:300;font-style:italic;
-  color:var(--dark);line-height:1.15;margin-bottom:36px;
-}
-.btn{
-  display:inline-block;padding:14px 36px;
-  font-family:'Jost',sans-serif;font-size:10px;font-weight:400;
-  letter-spacing:.18em;text-transform:uppercase;
-  text-decoration:none;cursor:pointer;border:none;
-  transition:all .25s;
-}
+.hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(32px,4.2vw,54px);font-weight:300;font-style:italic;color:var(--dark);line-height:1.15;margin-bottom:36px}
+.btn{display:inline-block;padding:14px 36px;font-family:'Jost',sans-serif;font-size:10px;font-weight:400;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;transition:all .25s}
 .btn-dark{background:var(--dark);color:white}
 .btn-dark:hover{background:var(--beige)}
 .btn-outline{background:transparent;color:var(--dark);border:1px solid rgba(30,30,28,.35)}
@@ -106,27 +67,19 @@ nav{
 .btn-outline-lt{background:transparent;color:white;border:1px solid rgba(255,255,255,.4)}
 .btn-outline-lt:hover{background:white;color:var(--dark)}
 
-/* ── COLLECTION ── */
+/* ── SECTION ── */
 .section{padding:88px 64px}
 .sec-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--beige);margin-bottom:10px;display:block}
 .sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.2vw,44px);font-weight:300;line-height:1.1;color:var(--dark)}
 .sec-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px}
 
+/* ── PRODUCT GRID ── */
 .prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:1200px;margin:0 auto}
 .prod-card{cursor:pointer}
 .prod-img{aspect-ratio:3/4;overflow:hidden;position:relative;margin-bottom:16px;background:var(--light)}
-.prod-img-inner{
-  width:100%;height:100%;
-  background:linear-gradient(160deg,#EDE6DA,#D4C8B5);
-  display:flex;align-items:center;justify-content:center;
-  transition:transform .7s ease;
-}
+.prod-img-inner{width:100%;height:100%;background:linear-gradient(160deg,#EDE6DA,#D4C8B5);display:flex;align-items:center;justify-content:center;transition:transform .7s ease}
 .prod-card:hover .prod-img-inner{transform:scale(1.04)}
-.prod-img-lbl{
-  font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:12px;color:rgba(0,0,0,.28);letter-spacing:.1em;
-  text-align:center;padding:20px;line-height:2;
-}
+.prod-img-lbl{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(0,0,0,.28);letter-spacing:.1em;text-align:center;padding:20px;line-height:2}
 .badge{position:absolute;top:14px;left:14px;background:var(--dark);color:white;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px}
 .badge-soon{background:var(--beige)}
 .prod-name{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:400;margin-bottom:3px}
@@ -136,35 +89,39 @@ nav{
 /* ── PRODUCT DETAIL ── */
 .prod-detail{display:grid;grid-template-columns:55% 45%;min-height:calc(100vh - var(--nav))}
 
-.prod-gallery{
-  position:sticky;top:var(--nav);
-  height:calc(100vh - var(--nav));
-  background:var(--light);
-  display:flex;flex-direction:column;
-  align-items:center;justify-content:center;
-  padding:48px;gap:14px;
-}
-.gallery-main{
-  width:100%;max-width:460px;aspect-ratio:3/4;
-  background:linear-gradient(150deg,#EDE6DA,#D4C8B5);
-  display:flex;align-items:center;justify-content:center;
-  font-family:'Cormorant Garamond',serif;font-style:italic;
-  font-size:12px;color:rgba(0,0,0,.22);letter-spacing:.1em;text-align:center;padding:24px;line-height:2;
-}
-.gallery-thumbs{display:flex;gap:8px}
-.g-thumb{
-  width:50px;height:62px;background:var(--border);cursor:pointer;
-  border:1px solid transparent;transition:border-color .2s;
-  font-size:8px;color:var(--mid);display:flex;align-items:center;justify-content:center;text-align:center;
-}
-.g-thumb.active{border-color:var(--dark)}
+/* ── GALLERY WITH SLIDER ── */
+.prod-gallery{position:sticky;top:var(--nav);height:calc(100vh - var(--nav));background:var(--light);display:flex;flex-direction:column;overflow:hidden}
 
-.prod-info{padding:64px 52px;display:flex;flex-direction:column;gap:22px;border-left:1px solid var(--border);overflow-y:auto}
+.slider-wrap{flex:1;position:relative;overflow:hidden}
+.slider-track{display:flex;height:100%;transition:transform .45s cubic-bezier(.4,0,.2,1);will-change:transform}
+.slide{flex:0 0 100%;height:100%;display:flex;align-items:center;justify-content:center;padding:40px}
+.slide-inner{width:100%;max-width:420px;aspect-ratio:3/4;background:linear-gradient(150deg,#EDE6DA,#D4C8B5);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:12px;color:rgba(0,0,0,.22);letter-spacing:.1em;text-align:center;padding:24px;line-height:2}
+
+/* Slider arrows */
+.slider-prev,.slider-next{position:absolute;top:50%;transform:translateY(-50%);z-index:10;background:rgba(255,255,255,.85);border:1px solid var(--border);width:36px;height:36px;border-radius:50%;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s;backdrop-filter:blur(4px)}
+.slider-prev{left:16px}
+.slider-next{right:16px}
+.slider-prev:hover,.slider-next:hover{background:var(--dark);border-color:var(--dark)}
+.slider-prev svg,.slider-next svg{width:14px;height:14px;stroke:var(--dark);fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;transition:stroke .2s}
+.slider-prev:hover svg,.slider-next:hover svg{stroke:white}
+
+/* Slider dots */
+.slider-dots{display:flex;justify-content:center;gap:7px;padding:16px 0}
+.s-dot{width:6px;height:6px;border-radius:50%;background:var(--border);cursor:pointer;transition:all .2s;border:none}
+.s-dot.active{background:var(--dark);width:18px;border-radius:3px}
+
+/* Color thumbnails row */
+.color-thumbs-row{display:flex;gap:10px;padding:0 24px 20px;justify-content:center;flex-wrap:wrap}
+.ct{width:48px;cursor:pointer;text-align:center}
+.ct-swatch{width:28px;height:28px;border-radius:50%;margin:0 auto 5px;border:2px solid transparent;outline:2px solid transparent;outline-offset:2px;transition:outline-color .2s}
+.ct.active .ct-swatch,.ct:hover .ct-swatch{outline-color:var(--dark)}
+.ct-label{font-size:8px;letter-spacing:.08em;color:var(--mid);text-transform:uppercase;line-height:1.3}
+
+/* ── PRODUCT INFO ── */
+.prod-info{padding:56px 52px;display:flex;flex-direction:column;gap:20px;border-left:1px solid var(--border);overflow-y:auto}
 .prod-info .prod-name{font-size:clamp(32px,2.8vw,48px);font-weight:300;line-height:1.05;margin-bottom:0}
 .prod-info .prod-price{font-size:22px;font-weight:300}
-
 .fur-notice{font-size:11px;color:var(--mid);letter-spacing:.04em;padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);line-height:1.8}
-
 .sel-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);display:block;margin-bottom:12px}
 .sel-label span{color:var(--dark)}
 .color-opts{display:flex;gap:10px;flex-wrap:wrap}
@@ -177,20 +134,16 @@ nav{
 .cswatch[data-c="taupe"]{background:#8B7355}
 .cswatch[data-c="wgrey"]{background:#D8D4CE;border-color:var(--border)}
 .cswatch[data-c="bsand"]{background:#C9B38A}
-
 .size-opts{display:flex;gap:8px}
 .sz-btn{min-width:44px;height:44px;border:1px solid var(--border);background:white;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.07em;cursor:pointer;transition:all .2s;padding:0 10px}
 .sz-btn:hover,.sz-btn.active{background:var(--dark);color:white;border-color:var(--dark)}
-
 .atc-btn{width:100%;padding:17px;background:var(--dark);color:white;border:none;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .25s}
 .atc-btn:hover{background:var(--beige)}
 .atc-btn:disabled{background:#C8C8C6;cursor:default}
-
-.prod-feats{list-style:none;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--border);padding-top:22px}
+.prod-feats{list-style:none;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--border);padding-top:20px}
 .prod-feats li{font-size:13px;color:var(--mid);padding-left:16px;position:relative;line-height:1.6}
 .prod-feats li::before{content:'—';position:absolute;left:0;color:var(--beige)}
-
-.cs-notice{background:var(--light);padding:24px;text-align:center;border:1px solid var(--border)}
+.cs-notice{background:var(--light);padding:22px;text-align:center;border:1px solid var(--border)}
 .cs-notice p:first-child{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--dark);margin-bottom:5px}
 .cs-notice p:last-child{font-size:12px;color:var(--mid)}
 .cs-notice a{color:var(--dark)}
@@ -231,13 +184,7 @@ nav{
 /* ── CART ── */
 .cart-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.25);z-index:300;backdrop-filter:blur(2px)}
 .cart-overlay.open{display:block}
-.cart-drawer{
-  position:fixed;top:0;right:-420px;width:420px;height:100vh;
-  background:white;z-index:301;
-  padding:40px;overflow-y:auto;
-  transition:right .3s cubic-bezier(.4,0,.2,1);
-  display:flex;flex-direction:column;
-}
+.cart-drawer{position:fixed;top:0;right:-420px;width:420px;height:100vh;background:white;z-index:301;padding:40px;overflow-y:auto;transition:right .3s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
 .cart-drawer.open{right:0}
 .cart-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
 .cart-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300}
@@ -274,83 +221,44 @@ footer{background:var(--dark);padding:64px 64px 44px;display:grid;grid-template-
 .toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--dark);color:white;padding:13px 28px;font-size:11px;letter-spacing:.13em;text-transform:uppercase;z-index:400;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ════════════════════════════
-   MOBILE
-════════════════════════════ */
+/* ════════ MOBILE ════════ */
 @media(max-width:860px){
   :root{--nav:56px}
-
-  /* Nav */
   nav{padding:0 20px}
   .nav-center{display:none}
   .nav-hamburger{display:flex}
-
-  /* Pages */
   .page{padding-top:var(--nav)}
-
-  /* Hero */
   .hero{height:calc(100svh - var(--nav));align-items:flex-end}
   .hero-content{padding:28px 22px 36px;max-width:100%}
-
-  /* Sections */
   .section{padding:52px 20px}
   .sec-header{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:32px}
-
-  /* Product grid — single column */
   .prod-grid{grid-template-columns:1fr;max-width:360px;margin:0 auto;gap:36px}
 
-  /* Product detail — stacked, no sticky */
-  .prod-detail{
-    display:block; /* single column, natural flow */
-  }
+  /* Product detail stacked */
+  .prod-detail{display:block}
   .prod-gallery{
-    position:static;
-    height:auto;
-    aspect-ratio:4/5;
-    padding:0;
-    gap:0;
+    position:static;height:auto;
+    flex-direction:column;
   }
-  .gallery-main{
-    max-width:100%;
-    width:100%;
-    height:100%;
-    aspect-ratio:unset;
-    border-radius:0;
-  }
-  .gallery-thumbs{display:none}
+  .slider-wrap{aspect-ratio:4/5;height:auto}
+  .slide{padding:0}
+  .slide-inner{max-width:100%;width:100%;height:100%;aspect-ratio:unset;border-radius:0}
+  .slider-prev,.slider-next{width:32px;height:32px}
+  .color-thumbs-row{padding:12px 16px}
 
-  .prod-info{
-    padding:28px 20px 48px;
-    border-left:none;
-    border-top:1px solid var(--border);
-    gap:18px;
-    overflow-y:visible;
-  }
+  .prod-info{padding:28px 20px 48px;border-left:none;border-top:1px solid var(--border);gap:18px;overflow-y:visible}
   .prod-info .prod-name{font-size:30px}
 
-  /* About */
   .about-layout{display:block}
   .about-img{min-height:240px}
   .about-text{padding:48px 22px}
-
-  /* Cart drawer full width */
   .cart-drawer{width:100%;right:-100%}
-
-  /* Footer */
   footer{grid-template-columns:1fr;padding:44px 22px 28px;gap:28px}
   .ft-bottom{padding:14px 22px;flex-direction:column;gap:5px;text-align:center}
-
-  /* FAQ / Legal */
-  .faq-wrap{padding:48px 20px}
-  .legal-wrap{padding:48px 20px}
-
-  /* Photo guide */
+  .faq-wrap,.legal-wrap{padding:48px 20px}
   .photo-grid{grid-template-columns:1fr;gap:2px}
-
-  /* Toast above thumb home bar */
   .toast{bottom:28px}
 }
-
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
@@ -366,12 +274,29 @@ footer{background:var(--dark);padding:64px 64px 44px;display:grid;grid-template-
     <li><a onclick="showPage('about')">About</a></li>
     <li><a onclick="showPage('faq')">FAQ</a></li>
   </ul>
-  <button class="nav-cart" onclick="openCart()">
-    Warenkorb <span class="cart-dot" id="cartDot">0</span>
-  </button>
-  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
-    <span></span><span></span><span></span>
-  </button>
+  <div style="display:flex;align-items:center;gap:4px">
+    <!-- Birkin bag icon -->
+    <button class="nav-cart-btn" onclick="openCart()">
+      <svg class="birkin-icon" viewBox="0 0 32 28" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- handles -->
+        <path d="M10 8 C10 4 12 2 16 2 C20 2 22 4 22 8" stroke="#1E1E1C" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+        <!-- body trapezoid -->
+        <path d="M4 8 L6 24 Q6 26 8 26 L24 26 Q26 26 26 24 L28 8 Z" stroke="#1E1E1C" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+        <!-- top bar -->
+        <line x1="4" y1="8" x2="28" y2="8" stroke="#1E1E1C" stroke-width="1.5" stroke-linecap="round"/>
+        <!-- center lock -->
+        <rect x="14" y="11" width="4" height="3.5" rx="0.5" stroke="#1E1E1C" stroke-width="1.2" fill="none"/>
+        <circle cx="16" cy="11" r="1.2" stroke="#1E1E1C" stroke-width="1.2" fill="none"/>
+        <!-- strap lines -->
+        <line x1="8" y1="8" x2="9" y2="26" stroke="#1E1E1C" stroke-width=".8" stroke-dasharray="0" opacity=".25"/>
+        <line x1="24" y1="8" x2="23" y2="26" stroke="#1E1E1C" stroke-width=".8" opacity=".25"/>
+      </svg>
+      <span class="cart-count-badge" id="cartBadge"></span>
+    </button>
+    <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
 </nav>
 
 <!-- MOBILE MENU -->
@@ -386,54 +311,38 @@ footer{background:var(--dark);padding:64px 64px 44px;display:grid;grid-template-
   </ul>
 </div>
 
-<!-- HOME -->
+<!-- ═══ HOME ═══ -->
 <div id="page-home" class="page active">
   <div class="hero">
-    <div class="hero-placeholder">
-      Produktfoto — Eve in The Coat<br>
-      Frontal · Hermès-Setting · Marmor
-    </div>
+    <div class="hero-placeholder">Produktfoto — Eve in The Coat<br>Frontal · Hermès-Setting · Marmor</div>
     <div class="hero-content">
       <span class="hero-eyebrow">Berlin · Limited Edition</span>
       <p class="hero-tagline">Pieces made for women who know what they want.</p>
       <button onclick="showPage('shop')" class="btn btn-dark">Jetzt shoppen</button>
     </div>
   </div>
-
   <div class="section">
     <div class="sec-header">
-      <div>
-        <span class="sec-label">Aktuelle Pieces</span>
-        <h2 class="sec-title">Die Kollektion</h2>
-      </div>
+      <div><span class="sec-label">Aktuelle Pieces</span><h2 class="sec-title">Die Kollektion</h2></div>
       <button onclick="showPage('shop')" class="btn btn-outline" style="white-space:nowrap;flex-shrink:0">Alle ansehen</button>
     </div>
     <div class="prod-grid">
       <div class="prod-card" onclick="showPage('coat')">
         <div class="prod-img">
-          <div class="prod-img-inner">
-            <div class="prod-img-lbl">The Coat<br>Chocolate Brown<br><span style="font-size:11px;opacity:.5">Foto: Frontal · Hotel/Marmor</span></div>
-          </div>
+          <div class="prod-img-inner"><div class="prod-img-lbl">The Coat<br>Chocolate Brown<br><span style="font-size:11px;opacity:.5">Foto: Frontal · Hotel/Marmor</span></div></div>
           <div class="badge">Verfügbar</div>
         </div>
-        <div class="prod-name">The Coat</div>
-        <div class="prod-sub">Wollmantel mit Fellbesatz · S–L</div>
-        <div class="prod-price">€ 459,00</div>
+        <div class="prod-name">The Coat</div><div class="prod-sub">Wollmantel mit Fellbesatz · S–L</div><div class="prod-price">€ 459,00</div>
       </div>
       <div class="prod-card" onclick="showPage('fox')">
         <div class="prod-img">
-          <div class="prod-img-inner" style="background:linear-gradient(160deg,#E8DDD0,#D4C4B0)">
-            <div class="prod-img-lbl">The Fox<br>Coming Soon<br><span style="font-size:11px;opacity:.5">Foto: KuDamm · City</span></div>
-          </div>
+          <div class="prod-img-inner" style="background:linear-gradient(160deg,#E8DDD0,#D4C4B0)"><div class="prod-img-lbl">The Fox<br>Coming Soon<br><span style="font-size:11px;opacity:.5">Foto: KuDamm · City</span></div></div>
           <div class="badge badge-soon">Coming Soon</div>
         </div>
-        <div class="prod-name">The Fox</div>
-        <div class="prod-sub">Fuchspelz-Jacke · XS–L</div>
-        <div class="prod-price">€ 429,00</div>
+        <div class="prod-name">The Fox</div><div class="prod-sub">Fuchspelz-Jacke · XS–L</div><div class="prod-price">€ 429,00</div>
       </div>
     </div>
   </div>
-
   <div style="background:var(--dark);padding:72px 64px;text-align:center">
     <span class="sec-label" style="color:var(--beige)">Instagram</span>
     <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3.2vw,40px);font-weight:300;font-style:italic;color:white;margin:12px 0 28px">@bynalie_</p>
@@ -441,67 +350,46 @@ footer{background:var(--dark);padding:64px 64px 44px;display:grid;grid-template-
   </div>
 </div>
 
-<!-- SHOP -->
+<!-- ═══ SHOP ═══ -->
 <div id="page-shop" class="page">
   <div class="section">
-    <div class="sec-header">
-      <div>
-        <span class="sec-label">Alle Pieces</span>
-        <h1 class="sec-title">Shop</h1>
-      </div>
-    </div>
+    <div class="sec-header"><div><span class="sec-label">Alle Pieces</span><h1 class="sec-title">Shop</h1></div></div>
     <div class="prod-grid">
       <div class="prod-card" onclick="showPage('coat')">
-        <div class="prod-img">
-          <div class="prod-img-inner"><div class="prod-img-lbl">The Coat<br><span style="opacity:.5;font-size:11px">Foto folgt</span></div></div>
-          <div class="badge">Verfügbar</div>
-        </div>
-        <div class="prod-name">The Coat</div>
-        <div class="prod-sub">Wollmantel mit Fellbesatz · S–L</div>
-        <div class="prod-price">€ 459,00</div>
+        <div class="prod-img"><div class="prod-img-inner"><div class="prod-img-lbl">The Coat<br><span style="opacity:.5;font-size:11px">Foto folgt</span></div></div><div class="badge">Verfügbar</div></div>
+        <div class="prod-name">The Coat</div><div class="prod-sub">Wollmantel · S–L</div><div class="prod-price">€ 459,00</div>
       </div>
       <div class="prod-card" onclick="showPage('fox')">
-        <div class="prod-img">
-          <div class="prod-img-inner" style="background:linear-gradient(160deg,#E8DDD0,#D4C4B0)"><div class="prod-img-lbl">The Fox<br><span style="opacity:.5;font-size:11px">Coming Soon</span></div></div>
-          <div class="badge badge-soon">Coming Soon</div>
-        </div>
-        <div class="prod-name">The Fox</div>
-        <div class="prod-sub">Fuchspelz-Jacke · XS–L</div>
-        <div class="prod-price">€ 429,00</div>
+        <div class="prod-img"><div class="prod-img-inner" style="background:linear-gradient(160deg,#E8DDD0,#D4C4B0)"><div class="prod-img-lbl">The Fox<br><span style="opacity:.5;font-size:11px">Coming Soon</span></div></div><div class="badge badge-soon">Coming Soon</div></div>
+        <div class="prod-name">The Fox</div><div class="prod-sub">Fuchspelz-Jacke · XS–L</div><div class="prod-price">€ 429,00</div>
       </div>
     </div>
   </div>
 </div>
 
-<!-- THE COAT -->
+<!-- ═══ THE COAT ═══ -->
 <div id="page-coat" class="page">
   <div class="prod-detail">
-    <div class="prod-gallery">
-      <div class="gallery-main" id="coatImg">
-        Produktfoto<br><br>
-        <span style="font-size:11px;opacity:.4">Chocolate Brown · Frontal · Hotel/Marmor</span>
+    <div class="prod-gallery" id="coatGallery">
+      <div class="slider-wrap">
+        <div class="slider-track" id="coatTrack"></div>
+        <button class="slider-prev" onclick="slideDir('coat',-1)"><svg viewBox="0 0 14 14"><polyline points="9,2 4,7 9,12"/></svg></button>
+        <button class="slider-next" onclick="slideDir('coat',1)"><svg viewBox="0 0 14 14"><polyline points="5,2 10,7 5,12"/></svg></button>
       </div>
-      <div class="gallery-thumbs">
-        <div class="g-thumb active" onclick="setThumb(this,'coatImg','Chocolate Brown · Frontal · Hotel/Marmor')">Brown</div>
-        <div class="g-thumb" onclick="setThumb(this,'coatImg','Detailaufnahme Fellbesatz')">Detail</div>
-        <div class="g-thumb" onclick="setThumb(this,'coatImg','Rückenansicht · Bindegürtel')">Rücken</div>
-        <div class="g-thumb" onclick="setThumb(this,'coatImg','Lifestyle · Marmor · Hotel')">Life</div>
-      </div>
+      <div class="slider-dots" id="coatDots"></div>
+      <div class="color-thumbs-row" id="coatColorThumbs"></div>
     </div>
     <div class="prod-info">
-      <div>
-        <span class="sec-label">The Coat</span>
-        <h1 class="prod-name">Wollmantel<br>mit Fellbesatz</h1>
-      </div>
+      <div><span class="sec-label">The Coat</span><h1 class="prod-name">Wollmantel<br>mit Fellbesatz</h1></div>
       <div class="prod-price">€ 459,00</div>
       <div class="fur-notice">Dieses Produkt enthält Echtfell. Tierart: Rotfuchs (Vulpes vulpes), Farmhaltung, China. Gemäß EU-Verordnung Nr. 1007/2011 gekennzeichnet.</div>
       <div>
         <label class="sel-label">Farbe — <span id="coatColorLbl">Chocolate Brown</span></label>
         <div class="color-opts">
-          <div class="cswatch active" data-c="choc" title="Chocolate Brown" onclick="selectColor(this,'coat','Chocolate Brown')"></div>
-          <div class="cswatch" data-c="black" title="Black" onclick="selectColor(this,'coat','Black')"></div>
-          <div class="cswatch" data-c="beige" title="Beige / Camel" onclick="selectColor(this,'coat','Beige / Camel')"></div>
-          <div class="cswatch" data-c="white" title="Weiß / Creme" onclick="selectColor(this,'coat','Weiß / Creme')"></div>
+          <div class="cswatch active" data-c="choc" title="Chocolate Brown" onclick="selectColorSlider(this,'coat',0)"></div>
+          <div class="cswatch" data-c="black" title="Black" onclick="selectColorSlider(this,'coat',1)"></div>
+          <div class="cswatch" data-c="beige" title="Beige / Camel" onclick="selectColorSlider(this,'coat',2)"></div>
+          <div class="cswatch" data-c="white" title="Weiß / Creme" onclick="selectColorSlider(this,'coat',3)"></div>
         </div>
       </div>
       <div>
@@ -525,20 +413,20 @@ footer{background:var(--dark);padding:64px 64px 44px;display:grid;grid-template-
   </div>
 </div>
 
-<!-- THE FOX -->
+<!-- ═══ THE FOX ═══ -->
 <div id="page-fox" class="page">
   <div class="prod-detail">
-    <div class="prod-gallery" style="background:#EDE7DE">
-      <div class="gallery-main" style="background:linear-gradient(150deg,#E5DDD3,#D0C0AA)">
-        Produktfoto The Fox<br><br>
-        <span style="font-size:11px;opacity:.4">Taupe/Mink · Von hinten · KuDamm</span>
+    <div class="prod-gallery" id="foxGallery">
+      <div class="slider-wrap">
+        <div class="slider-track" id="foxTrack"></div>
+        <button class="slider-prev" onclick="slideDir('fox',-1)"><svg viewBox="0 0 14 14"><polyline points="9,2 4,7 9,12"/></svg></button>
+        <button class="slider-next" onclick="slideDir('fox',1)"><svg viewBox="0 0 14 14"><polyline points="5,2 10,7 5,12"/></svg></button>
       </div>
+      <div class="slider-dots" id="foxDots"></div>
+      <div class="color-thumbs-row" id="foxColorThumbs"></div>
     </div>
     <div class="prod-info">
-      <div>
-        <span class="sec-label">The Fox</span>
-        <h1 class="prod-name">Fuchspelz-<br>Jacke</h1>
-      </div>
+      <div><span class="sec-label">The Fox</span><h1 class="prod-name">Fuchspelz-<br>Jacke</h1></div>
       <div class="prod-price">€ 429,00</div>
       <div class="cs-notice">
         <p>Bald verfügbar.</p>
@@ -558,12 +446,10 @@ footer{background:var(--dark);padding:64px 64px 44px;display:grid;grid-template-
   </div>
 </div>
 
-<!-- ABOUT -->
+<!-- ═══ ABOUT ═══ -->
 <div id="page-about" class="page">
   <div class="about-layout">
-    <div class="about-img">
-      <div class="about-img-lbl">Foto — Eve Treis<br>Portrait · Natürliches Licht</div>
-    </div>
+    <div class="about-img"><div class="about-img-lbl">Foto — Eve Treis<br>Portrait · Natürliches Licht</div></div>
     <div class="about-text">
       <span class="sec-label">About</span>
       <blockquote>"ByNalie ist keine Modemarke. Es ist eine Entscheidung."</blockquote>
@@ -574,109 +460,44 @@ footer{background:var(--dark);padding:64px 64px 44px;display:grid;grid-template-
   </div>
 </div>
 
-<!-- FAQ -->
+<!-- ═══ FAQ ═══ -->
 <div id="page-faq" class="page">
   <div class="faq-wrap">
     <span class="sec-label">Häufige Fragen</span>
     <h1 class="sec-title" style="margin-bottom:44px">FAQ</h1>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Welche Größe soll ich wählen?<span class="faq-icon">+</span></button>
-      <div class="faq-a">Alle Stücke sind Oversized geschnitten. Eine Größe passt S–L. Bei Unsicherheit einfach per DM fragen.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Ist das Fell echt?<span class="faq-icon">+</span></button>
-      <div class="faq-a">Ja. Wir verwenden ausschließlich echtes Fell. Alle Produkte sind gemäß EU-Verordnung Nr. 1007/2011 gekennzeichnet.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Kann ich zurückschicken?<span class="faq-icon">+</span></button>
-      <div class="faq-a">Ja, innerhalb von 14 Tagen in ungetragenem Zustand mit allen Etiketten. Kontakt: contact@bynalie.com oder @bynalie_. Rücksendekosten trägt der Käufer.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Wie lange dauert der Versand?<span class="faq-icon">+</span></button>
-      <div class="faq-a">Deutschland: 3–5 Werktage. EU: 5–8 Werktage. Kostenloser Versand ab €200 innerhalb Deutschlands.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Gibt es andere Farben?<span class="faq-icon">+</span></button>
-      <div class="faq-a">Wir arbeiten ständig an neuen Farben. Follow @bynalie_ um als Erste informiert zu werden.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Welche Zahlungsmethoden?<span class="faq-icon">+</span></button>
-      <div class="faq-a">Kreditkarte, Apple Pay, Google Pay und PayPal — sicher über Shopify Payments / Stripe.</div>
-    </div>
-    <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Wie pflege ich das Fell?<span class="faq-icon">+</span></button>
-      <div class="faq-a">The Coat: Nur chemische Reinigung. The Fox: Ausschließlich professionelle Pelzreinigung. Nie Waschmaschine, nicht direktes Sonnenlicht.</div>
-    </div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Welche Größe soll ich wählen?<span class="faq-icon">+</span></button><div class="faq-a">Alle Stücke sind Oversized geschnitten. Eine Größe passt S–L. Bei Unsicherheit einfach per DM fragen.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Ist das Fell echt?<span class="faq-icon">+</span></button><div class="faq-a">Ja. Wir verwenden ausschließlich echtes Fell. Alle Produkte sind gemäß EU-Verordnung Nr. 1007/2011 gekennzeichnet.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Kann ich zurückschicken?<span class="faq-icon">+</span></button><div class="faq-a">Ja, innerhalb von 14 Tagen in ungetragenem Zustand. Kontakt: contact@bynalie.com oder @bynalie_. Rücksendekosten trägt der Käufer.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Wie lange dauert der Versand?<span class="faq-icon">+</span></button><div class="faq-a">Deutschland: 3–5 Werktage. EU: 5–8 Werktage. Kostenloser Versand ab €200.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Gibt es andere Farben?<span class="faq-icon">+</span></button><div class="faq-a">Wir arbeiten ständig an neuen Farben. Follow @bynalie_ um als Erste informiert zu werden.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Welche Zahlungsmethoden?<span class="faq-icon">+</span></button><div class="faq-a">Kreditkarte, Apple Pay, Google Pay und PayPal — sicher über Shopify Payments / Stripe.</div></div>
+    <div class="faq-item"><button class="faq-q" onclick="toggleFaq(this)">Wie pflege ich das Fell?<span class="faq-icon">+</span></button><div class="faq-a">The Coat: Nur chemische Reinigung. The Fox: Nur professionelle Pelzreinigung. Nie Waschmaschine.</div></div>
   </div>
 </div>
 
-<!-- FOTO GUIDE -->
+<!-- ═══ FOTO GUIDE ═══ -->
 <div id="page-photos" class="page">
   <div class="section">
     <span class="sec-label">Shooting Planung</span>
     <h1 class="sec-title" style="margin-bottom:8px">Foto-Guide</h1>
-    <p style="color:var(--mid);font-size:13px">7 Aufnahmen · Kein weißer Studiohintergrund · Immer in Eves Welt</p>
+    <p style="color:var(--mid);font-size:13px">7 Farben · 3 Fotos pro Farbe = 21 Aufnahmen · Kein weißer Studiohintergrund</p>
     <div class="photo-grid">
-      <div class="photo-card"><div class="photo-num">01</div><div class="photo-prod">The Coat</div><div class="photo-color">Chocolate Brown</div><div class="photo-desc">Frontal · Hermès-Stil<br>Setting: Marmor / Hotel<br>Licht: Sehr hell<br>Hermès-Tasche sichtbar ✓</div></div>
-      <div class="photo-card"><div class="photo-num">02</div><div class="photo-prod">The Coat</div><div class="photo-color">Black</div><div class="photo-desc">Frontal<br>Setting: Helle Wand<br>Licht: High Contrast<br>Minimalistisch</div></div>
-      <div class="photo-card"><div class="photo-num">03</div><div class="photo-prod">The Coat</div><div class="photo-color">Beige / Camel</div><div class="photo-desc">¾ Winkel<br>Setting: Outdoor<br>Licht: Warmes Tageslicht<br>Golden Hour ideal</div></div>
-      <div class="photo-card"><div class="photo-num">04</div><div class="photo-prod">The Coat</div><div class="photo-color">Weiß / Creme</div><div class="photo-desc">Von hinten<br>Setting: Marmorboden<br>Licht: Clean, bright<br>Bindegürtel sichtbar ✓</div></div>
-      <div class="photo-card" style="background:#EDE7DE"><div class="photo-num">05</div><div class="photo-prod">The Fox</div><div class="photo-color">Taupe / Mink</div><div class="photo-desc">Von hinten<br>Setting: KuDamm / City<br>Licht: Natürlich<br>Urban Feeling</div></div>
-      <div class="photo-card" style="background:#EDE7DE"><div class="photo-num">06</div><div class="photo-prod">The Fox</div><div class="photo-color">Weiß / Hellgrau</div><div class="photo-desc">Frontal<br>Setting: Minimaler Hintergrund<br>Licht: Bright & clean<br>Fell-Textur zeigen ✓</div></div>
-      <div class="photo-card" style="background:#EDE7DE"><div class="photo-num">07</div><div class="photo-prod">The Fox</div><div class="photo-color">Beige / Sand</div><div class="photo-desc">Lifestyle<br>Setting: Outdoor, sonnig<br>Licht: Warm, golden<br>Bewegung erlaubt</div></div>
+      <div class="photo-card"><div class="photo-num">01</div><div class="photo-prod">The Coat</div><div class="photo-color">Chocolate Brown</div><div class="photo-desc">Foto 1: Frontal · Hermès-Stil · Marmor/Hotel<br>Foto 2: Detailaufnahme Fellbesatz Ärmel<br>Foto 3: Lifestyle · Gürtel · Rückenansicht</div></div>
+      <div class="photo-card"><div class="photo-num">02</div><div class="photo-prod">The Coat</div><div class="photo-color">Black</div><div class="photo-desc">Foto 1: Frontal · Helle Wand · High Contrast<br>Foto 2: Seitenansicht · Silhouette<br>Foto 3: Detailaufnahme Kragen</div></div>
+      <div class="photo-card"><div class="photo-num">03</div><div class="photo-prod">The Coat</div><div class="photo-color">Beige / Camel</div><div class="photo-desc">Foto 1: ¾ Winkel · Outdoor · Golden Hour<br>Foto 2: Frontal · Warmes Licht<br>Foto 3: Bewegung · Walking Shot</div></div>
+      <div class="photo-card"><div class="photo-num">04</div><div class="photo-prod">The Coat</div><div class="photo-color">Weiß / Creme</div><div class="photo-desc">Foto 1: Von hinten · Marmorboden<br>Foto 2: Frontal · Clean · Bright<br>Foto 3: Detailaufnahme Bindegürtel</div></div>
+      <div class="photo-card" style="background:#EDE7DE"><div class="photo-num">05</div><div class="photo-prod">The Fox</div><div class="photo-color">Taupe / Mink</div><div class="photo-desc">Foto 1: Von hinten · KuDamm / City<br>Foto 2: Frontal · Urban<br>Foto 3: Detailaufnahme Fell-Textur</div></div>
+      <div class="photo-card" style="background:#EDE7DE"><div class="photo-num">06</div><div class="photo-prod">The Fox</div><div class="photo-color">Weiß / Hellgrau</div><div class="photo-desc">Foto 1: Frontal · Minimaler Hintergrund<br>Foto 2: Seitenansicht · Clean<br>Foto 3: Detailaufnahme Fell horizontal</div></div>
+      <div class="photo-card" style="background:#EDE7DE"><div class="photo-num">07</div><div class="photo-prod">The Fox</div><div class="photo-color">Beige / Sand</div><div class="photo-desc">Foto 1: Lifestyle · Outdoor · Sonnig<br>Foto 2: Frontal · Warm · Golden<br>Foto 3: Bewegung · Outdoor</div></div>
     </div>
   </div>
 </div>
 
 <!-- IMPRESSUM -->
-<div id="page-impressum" class="page">
-  <div class="legal-wrap">
-    <h1>Impressum</h1>
-    <p>Angaben gemäß § 5 TMG:</p>
-    <p><strong>Eve Treis</strong><br>byNalie<br>[Straße und Hausnummer]<br>[PLZ] [Stadt]<br>Deutschland</p>
-    <h2>Kontakt</h2><p>E-Mail: contact@bynalie.com<br>Instagram: @bynalie_</p>
-    <h2>Umsatzsteuer</h2><p>Kleinunternehmerin gemäß § 19 UStG. USt-IdNr.: [eintragen]</p>
-    <h2>Verantwortlich</h2><p>Eve Treis, [Adresse wie oben]</p>
-    <h2>Streitschlichtung</h2><p>https://ec.europa.eu/consumers/odr — Wir nehmen nicht teil.</p>
-  </div>
-</div>
-
-<!-- AGB -->
-<div id="page-agb" class="page">
-  <div class="legal-wrap">
-    <h1>Allgemeine Geschäftsbedingungen</h1>
-    <h2>§ 1 Geltungsbereich</h2><p>Alle Bestellungen über bynalie.com von Eve Treis (byNalie), [Adresse].</p>
-    <h2>§ 2 Vertragsschluss</h2><p>Vertrag kommt zustande bei E-Mail-Bestätigung der Bestellung.</p>
-    <h2>§ 3 Preise und Zahlung</h2><p>Endpreise in Euro. Kleinunternehmerin gem. § 19 UStG — keine USt. Zahlung: Kreditkarte, PayPal, Apple Pay, Google Pay.</p>
-    <h2>§ 4 Versand</h2><ul><li>Deutschland: 3–5 Werktage, kostenlos ab €200, darunter €6,90</li><li>Österreich &amp; Schweiz: €12,90 pauschal</li><li>Restliches EU: €18,90 pauschal</li></ul>
-    <h2>§ 5 Widerrufsrecht</h2><p>14 Tage ab Warenerhalt. Rücksendung ungetragen, originalverpackt. contact@bynalie.com oder @bynalie_</p>
-    <h2>§ 6 Echtfell</h2><p>Gemäß EU-Verordnung Nr. 1007/2011 gekennzeichnet.</p>
-    <h2>§ 7–9</h2><p>Eigentumsvorbehalt bis Bezahlung. Gesetzliche Gewährleistung. Deutsches Recht, Gerichtsstand [Stadt].</p>
-  </div>
-</div>
-
-<!-- DATENSCHUTZ -->
-<div id="page-datenschutz" class="page">
-  <div class="legal-wrap">
-    <h1>Datenschutzerklärung</h1>
-    <h2>Verantwortlicher</h2><p>Eve Treis (byNalie), [Adresse], contact@bynalie.com</p>
-    <h2>Datenerfassung</h2><p>Name, Adresse, E-Mail, Zahlungsdaten zur Auftragsabwicklung. Art. 6 Abs. 1 lit. b DSGVO.</p>
-    <h2>Dienstleister</h2><p>Shopify/Stripe: stripe.com/de/privacy · PayPal: paypal.com/privacy · Instagram/Meta: privacycenter.instagram.com/policy</p>
-    <h2>Cookies</h2><p>Notwendige Cookies für Warenkorb und Checkout.</p>
-    <h2>Ihre Rechte</h2><p>Auskunft, Berichtigung, Löschung: contact@bynalie.com</p>
-  </div>
-</div>
-
-<!-- WIDERRUF -->
-<div id="page-widerruf" class="page">
-  <div class="legal-wrap">
-    <h1>Widerrufsbelehrung</h1>
-    <h2>Widerrufsrecht</h2><p>14 Tage ab Warenerhalt, ohne Angabe von Gründen.</p>
-    <h2>Kontakt</h2><p>contact@bynalie.com · @bynalie_</p>
-    <h2>Rücksendung</h2><ul><li>Ungetragen, alle Etiketten</li><li>Innerhalb 14 Tage nach Widerruf</li><li>Rücksendekosten trägt der Käufer</li></ul>
-    <h2>Erstattung</h2><p>Innerhalb 14 Tage nach Eingang auf ursprünglichen Zahlungsweg.</p>
-  </div>
-</div>
+<div id="page-impressum" class="page"><div class="legal-wrap"><h1>Impressum</h1><p>Angaben gemäß § 5 TMG:</p><p><strong>Eve Treis</strong><br>byNalie<br>[Straße und Hausnummer]<br>[PLZ] [Stadt]<br>Deutschland</p><h2>Kontakt</h2><p>E-Mail: contact@bynalie.com<br>Instagram: @bynalie_</p><h2>Umsatzsteuer</h2><p>Kleinunternehmerin gemäß § 19 UStG. USt-IdNr.: [eintragen]</p><h2>Verantwortlich</h2><p>Eve Treis, [Adresse wie oben]</p><h2>Streitschlichtung</h2><p>https://ec.europa.eu/consumers/odr — Wir nehmen nicht teil.</p></div></div>
+<div id="page-agb" class="page"><div class="legal-wrap"><h1>AGB</h1><h2>§ 1 Geltungsbereich</h2><p>Alle Bestellungen über bynalie.com von Eve Treis (byNalie), [Adresse].</p><h2>§ 2 Vertragsschluss</h2><p>Vertrag bei E-Mail-Bestätigung der Bestellung.</p><h2>§ 3 Preise</h2><p>Endpreise in Euro. Kleinunternehmerin gem. § 19 UStG — keine USt. Zahlung: Kreditkarte, PayPal, Apple Pay, Google Pay.</p><h2>§ 4 Versand</h2><ul><li>Deutschland: 3–5 Werktage, kostenlos ab €200, darunter €6,90</li><li>Österreich &amp; Schweiz: €12,90 pauschal</li><li>Restliches EU: €18,90 pauschal</li></ul><h2>§ 5 Widerruf</h2><p>14 Tage ab Warenerhalt. Ungetragen, originalverpackt. contact@bynalie.com oder @bynalie_</p><h2>§ 6–9</h2><p>Echtfell gem. EU-VO 1007/2011. Eigentumsvorbehalt. Gesetzliche Gewährleistung. Deutsches Recht.</p></div></div>
+<div id="page-datenschutz" class="page"><div class="legal-wrap"><h1>Datenschutzerklärung</h1><h2>Verantwortlicher</h2><p>Eve Treis (byNalie), [Adresse], contact@bynalie.com</p><h2>Datenerfassung</h2><p>Name, Adresse, E-Mail, Zahlungsdaten zur Auftragsabwicklung. Art. 6 Abs. 1 lit. b DSGVO.</p><h2>Dienstleister</h2><p>Shopify/Stripe · PayPal · Instagram/Meta</p><h2>Cookies</h2><p>Notwendige Cookies für Warenkorb und Checkout.</p><h2>Ihre Rechte</h2><p>Auskunft, Berichtigung, Löschung: contact@bynalie.com</p></div></div>
+<div id="page-widerruf" class="page"><div class="legal-wrap"><h1>Widerrufsbelehrung</h1><h2>Widerrufsrecht</h2><p>14 Tage ab Warenerhalt, ohne Angabe von Gründen.</p><h2>Kontakt</h2><p>contact@bynalie.com · @bynalie_</p><h2>Rücksendung</h2><ul><li>Ungetragen, alle Etiketten</li><li>Innerhalb 14 Tage nach Widerruf</li><li>Rücksendekosten trägt der Käufer</li></ul><h2>Erstattung</h2><p>Innerhalb 14 Tage nach Eingang auf ursprünglichen Zahlungsweg.</p></div></div>
 
 <!-- FOOTER -->
 <footer>
@@ -722,65 +543,204 @@ footer{background:var(--dark);padding:64px 64px 44px;display:grid;grid-template-
     </div>
   </div>
 </div>
-
 <div class="toast" id="toast"></div>
 
 <script>
-const st={coat:{color:'Chocolate Brown',size:'S'},fox:{color:'Taupe / Mink',size:'XS'}};
-const cart=[];
-let menuOpen=false;
+// ── SLIDER DATA ──
+const SLIDES = {
+  coat: {
+    colors: [
+      { name:'Chocolate Brown', c:'choc', bg:'linear-gradient(150deg,#8B6347,#6B4A32)', slides:[
+        {lbl:'Frontal · Hotel / Marmor'},
+        {lbl:'Detailaufnahme Fellbesatz'},
+        {lbl:'Rückenansicht · Bindegürtel'}
+      ]},
+      { name:'Black', c:'black', bg:'linear-gradient(150deg,#3A3A3A,#1A1A1A)', slides:[
+        {lbl:'Frontal · Helle Wand'},
+        {lbl:'Seitenansicht · Silhouette'},
+        {lbl:'Detailaufnahme Kragen'}
+      ]},
+      { name:'Beige / Camel', c:'beige', bg:'linear-gradient(150deg,#D4B896,#C4A882)', slides:[
+        {lbl:'¾ Winkel · Outdoor · Golden Hour'},
+        {lbl:'Frontal · Warmes Licht'},
+        {lbl:'Bewegung · Walking Shot'}
+      ]},
+      { name:'Weiß / Creme', c:'white', bg:'linear-gradient(150deg,#F0EDE8,#E5E0D8)', slides:[
+        {lbl:'Von hinten · Marmorboden'},
+        {lbl:'Frontal · Clean · Bright'},
+        {lbl:'Detailaufnahme Bindegürtel'}
+      ]}
+    ]
+  },
+  fox: {
+    colors: [
+      { name:'Taupe / Mink', c:'taupe', bg:'linear-gradient(150deg,#A08868,#8B7355)', slides:[
+        {lbl:'Von hinten · KuDamm'},
+        {lbl:'Frontal · Urban'},
+        {lbl:'Detailaufnahme Fell-Textur'}
+      ]},
+      { name:'Weiß / Hellgrau', c:'wgrey', bg:'linear-gradient(150deg,#E8E4DE,#D8D4CE)', slides:[
+        {lbl:'Frontal · Minimaler Hintergrund'},
+        {lbl:'Seitenansicht · Clean'},
+        {lbl:'Detailaufnahme horizontal'}
+      ]},
+      { name:'Beige / Sand', c:'bsand', bg:'linear-gradient(150deg,#D4B890,#C9B38A)', slides:[
+        {lbl:'Lifestyle · Outdoor · Sonnig'},
+        {lbl:'Frontal · Warm · Golden'},
+        {lbl:'Bewegung · Outdoor'}
+      ]}
+    ]
+  }
+};
 
-function showPage(id){
+const sliderState = {
+  coat: { colorIdx: 0, slideIdx: 0 },
+  fox:  { colorIdx: 0, slideIdx: 0 }
+};
+
+function buildSlider(prod) {
+  const track = document.getElementById(prod+'Track');
+  const dotsEl = document.getElementById(prod+'Dots');
+  const thumbsEl = document.getElementById(prod+'ColorThumbs');
+  if(!track) return;
+  const data = SLIDES[prod];
+  const st = sliderState[prod];
+  const color = data.colors[st.colorIdx];
+
+  // Build slides
+  track.innerHTML = '';
+  color.slides.forEach((s,i) => {
+    const slide = document.createElement('div');
+    slide.className = 'slide';
+    slide.innerHTML = `<div class="slide-inner" style="background:${color.bg}">${color.name}<br><span style="font-size:10px;opacity:.4;margin-top:8px;display:block">${s.lbl}</span></div>`;
+    track.appendChild(slide);
+  });
+  updateSliderPos(prod);
+
+  // Dots
+  dotsEl.innerHTML = '';
+  color.slides.forEach((_,i) => {
+    const d = document.createElement('button');
+    d.className = 's-dot' + (i===st.slideIdx?' active':'');
+    d.onclick = () => goToSlide(prod,i);
+    dotsEl.appendChild(d);
+  });
+
+  // Color thumbs
+  thumbsEl.innerHTML = '';
+  data.colors.forEach((col,i) => {
+    const ct = document.createElement('div');
+    ct.className = 'ct' + (i===st.colorIdx?' active':'');
+    ct.innerHTML = `<div class="ct-swatch cswatch" data-c="${col.c}" style="margin:0 auto 5px"></div><div class="ct-label">${col.name.split('/')[0].trim()}</div>`;
+    ct.onclick = () => { sliderState[prod].colorIdx=i; sliderState[prod].slideIdx=0; buildSlider(prod); syncColorSwatches(prod,i); };
+    thumbsEl.appendChild(ct);
+  });
+}
+
+function updateSliderPos(prod) {
+  const track = document.getElementById(prod+'Track');
+  if(!track) return;
+  const idx = sliderState[prod].slideIdx;
+  track.style.transform = `translateX(-${idx*100}%)`;
+  // update dots
+  const dots = document.getElementById(prod+'Dots');
+  if(dots) dots.querySelectorAll('.s-dot').forEach((d,i) => d.classList.toggle('active', i===idx));
+}
+
+function goToSlide(prod, idx) {
+  const data = SLIDES[prod];
+  const color = data.colors[sliderState[prod].colorIdx];
+  sliderState[prod].slideIdx = Math.max(0, Math.min(idx, color.slides.length-1));
+  updateSliderPos(prod);
+}
+
+function slideDir(prod, dir) {
+  const data = SLIDES[prod];
+  const color = data.colors[sliderState[prod].colorIdx];
+  const n = color.slides.length;
+  sliderState[prod].slideIdx = (sliderState[prod].slideIdx + dir + n) % n;
+  updateSliderPos(prod);
+}
+
+function selectColorSlider(el, prod, colorIdx) {
+  el.closest('.color-opts').querySelectorAll('.cswatch').forEach(s=>s.classList.remove('active'));
+  el.classList.add('active');
+  const lbl = document.getElementById(prod+'ColorLbl');
+  if(lbl) lbl.textContent = SLIDES[prod].colors[colorIdx].name;
+  sliderState[prod].colorIdx = colorIdx;
+  sliderState[prod].slideIdx = 0;
+  buildSlider(prod);
+}
+
+function syncColorSwatches(prod, colorIdx) {
+  const opts = document.querySelector('#page-'+prod+' .color-opts');
+  if(!opts) return;
+  const swatches = opts.querySelectorAll('.cswatch');
+  swatches.forEach((s,i) => s.classList.toggle('active', i===colorIdx));
+  const lbl = document.getElementById(prod+'ColorLbl');
+  if(lbl) lbl.textContent = SLIDES[prod].colors[colorIdx].name;
+}
+
+// Touch / swipe
+function addSwipe(prod) {
+  const wrap = document.querySelector('#page-'+prod+' .slider-wrap');
+  if(!wrap) return;
+  let startX=0, startY=0, dragging=false;
+  wrap.addEventListener('touchstart', e => { startX=e.touches[0].clientX; startY=e.touches[0].clientY; dragging=true; }, {passive:true});
+  wrap.addEventListener('touchend', e => {
+    if(!dragging) return; dragging=false;
+    const dx = e.changedTouches[0].clientX - startX;
+    const dy = e.changedTouches[0].clientY - startY;
+    if(Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 40) slideDir(prod, dx<0?1:-1);
+  }, {passive:true});
+}
+
+// ── STATE ──
+const selState = { coat:{color:'Chocolate Brown',size:'S'}, fox:{color:'Taupe / Mink',size:'XS'} };
+const cart = [];
+let menuOpen = false;
+
+function showPage(id) {
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
-  const el=document.getElementById('page-'+id);
-  if(el){el.classList.add('active');window.scrollTo(0,0);}
+  const el = document.getElementById('page-'+id);
+  if(el){ el.classList.add('active'); window.scrollTo(0,0); }
+  // init sliders
+  if(id==='coat' || id==='fox') { buildSlider(id); addSwipe(id); }
   return false;
 }
 
-function toggleMenu(){
+function toggleMenu() {
   menuOpen=!menuOpen;
   document.getElementById('mobOverlay').classList.toggle('open',menuOpen);
   document.getElementById('hamburger').classList.toggle('open',menuOpen);
   document.body.style.overflow=menuOpen?'hidden':'';
 }
-function closeMenu(){
+function closeMenu() {
   menuOpen=false;
   document.getElementById('mobOverlay').classList.remove('open');
   document.getElementById('hamburger').classList.remove('open');
   document.body.style.overflow='';
 }
 
-function setThumb(th,imgId,label){
-  th.closest('.prod-gallery').querySelectorAll('.g-thumb').forEach(t=>t.classList.remove('active'));
-  th.classList.add('active');
-  const el=document.getElementById(imgId);
-  if(el)el.innerHTML='Produktfoto<br><br><span style="font-size:11px;opacity:.4">'+label+'</span>';
-}
-
-function selectColor(el,prod,name){
-  el.closest('.color-opts').querySelectorAll('.cswatch').forEach(s=>s.classList.remove('active'));
-  el.classList.add('active');st[prod].color=name;
-  const lbl=document.getElementById(prod+'ColorLbl');
-  if(lbl)lbl.textContent=name;
-}
 function selectSize(el,prod){
   el.closest('.size-opts').querySelectorAll('.sz-btn').forEach(s=>s.classList.remove('active'));
-  el.classList.add('active');st[prod].size=el.textContent;
+  el.classList.add('active'); selState[prod].size=el.textContent;
 }
 
 function addToCart(prod){
   const p={coat:{name:'The Coat',price:459},fox:{name:'The Fox',price:429}};
-  cart.push({id:Date.now(),name:p[prod].name,color:st[prod].color,size:st[prod].size,price:p[prod].price});
-  renderCart();showToast('In den Warenkorb hinzugefügt');
+  const colorName = SLIDES[prod].colors[sliderState[prod].colorIdx].name;
+  cart.push({id:Date.now(),name:p[prod].name,color:colorName,size:selState[prod].size,price:p[prod].price});
+  renderCart(); showToast('In den Warenkorb hinzugefügt');
   setTimeout(()=>openCart(),400);
 }
 function removeFromCart(id){
-  const i=cart.findIndex(x=>x.id===id);if(i>-1)cart.splice(i,1);renderCart();
+  const i=cart.findIndex(x=>x.id===id); if(i>-1)cart.splice(i,1); renderCart();
 }
 function renderCart(){
   const n=cart.length;
-  document.getElementById('cartDot').textContent=n;
-  document.getElementById('cartDot').classList.toggle('active',n>0);
+  const badge=document.getElementById('cartBadge');
+  badge.textContent=n; badge.classList.toggle('visible',n>0);
   const itemsEl=document.getElementById('cartItems');
   const footEl=document.getElementById('cartFoot');
   if(n===0){itemsEl.innerHTML='<div class="cart-empty">Dein Warenkorb ist leer.</div>';footEl.style.display='none';return;}
@@ -811,9 +771,15 @@ function toggleFaq(btn){
 }
 function showToast(msg){
   const t=document.getElementById('toast');
-  t.textContent=msg;t.classList.add('show');
+  t.textContent=msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'),2600);
 }
+
+// Init sliders on load if product page active
+document.addEventListener('DOMContentLoaded',()=>{
+  if(document.getElementById('page-coat').classList.contains('active')){ buildSlider('coat'); addSwipe('coat'); }
+  if(document.getElementById('page-fox').classList.contains('active')){ buildSlider('fox'); addSwipe('fox'); }
+});
 </script>
 </body>
 </html>
