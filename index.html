@@ -9,119 +9,166 @@
 <style>
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --white:#FFFFFF;--beige:#C8B89A;--dark:#1E1E1C;--mid:#6B6B69;
-  --light-bg:#F9F7F5;--border:#E8E2DA;--nav-h:64px;--bot-h:68px;
+  --white:#FFFFFF;
+  --beige:#C8B89A;
+  --dark:#1E1E1C;
+  --mid:#6B6B69;
+  --light:#F9F7F5;
+  --border:#E8E2DA;
+  --nav:64px;
 }
 html{scroll-behavior:smooth;-webkit-tap-highlight-color:transparent}
-body{font-family:'Jost',sans-serif;background:var(--white);color:var(--dark);font-weight:300;line-height:1.6;font-size:15px;overscroll-behavior:none}
+body{font-family:'Jost',sans-serif;background:var(--white);color:var(--dark);font-weight:300;line-height:1.6;font-size:15px}
 
-/* ─── NAV DESKTOP ─── */
-.nav-d{position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.96);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:var(--nav-h);padding:0 48px;display:flex;align-items:center;justify-content:space-between}
-.nav-logo{font-family:'Pinyon Script',cursive;font-size:34px;color:var(--dark);text-decoration:none;letter-spacing:.02em;line-height:1}
-.nav-links{display:flex;gap:36px;list-style:none}
-.nav-links a{text-decoration:none;color:var(--dark);font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;transition:color .2s;cursor:pointer}
-.nav-links a:hover{color:var(--beige)}
-.nav-cart-btn{cursor:pointer;font-size:11px;letter-spacing:.12em;text-transform:uppercase;background:none;border:none;color:var(--dark);display:flex;align-items:center;gap:7px;padding:0;font-family:'Jost',sans-serif}
-.cart-badge{background:var(--dark);color:white;border-radius:50%;width:18px;height:18px;display:flex;align-items:center;justify-content:center;font-size:10px;transition:background .2s}
-.cart-badge.has-items{background:var(--beige)}
+/* ── NAV ── */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:100;
+  height:var(--nav);
+  background:rgba(255,255,255,0.96);
+  backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);
+  border-bottom:1px solid var(--border);
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 48px;
+}
+.nav-logo{font-family:'Pinyon Script',cursive;font-size:34px;color:var(--dark);text-decoration:none;line-height:1}
+.nav-center{display:flex;gap:32px;list-style:none}
+.nav-center a{font-size:11px;font-weight:400;letter-spacing:.14em;text-transform:uppercase;color:var(--dark);text-decoration:none;cursor:pointer;transition:color .2s}
+.nav-center a:hover{color:var(--beige)}
+.nav-cart{background:none;border:none;cursor:pointer;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.12em;text-transform:uppercase;color:var(--dark);display:flex;align-items:center;gap:7px}
+.cart-dot{width:18px;height:18px;background:var(--dark);border-radius:50%;color:white;font-size:10px;display:flex;align-items:center;justify-content:center;transition:background .2s}
+.cart-dot.active{background:var(--beige)}
 
-/* ─── NAV MOBILE ─── */
-.nav-m{display:none;position:fixed;top:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:56px;padding:0 20px;align-items:center;justify-content:space-between}
-.nav-m .nav-logo{font-size:28px}
-.m-nav-actions{display:flex;align-items:center;gap:14px}
-.m-cart-btn{background:none;border:none;cursor:pointer;padding:4px;position:relative;display:flex;align-items:center}
-.m-cart-btn svg{width:22px;height:22px;stroke:var(--dark);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.m-cart-dot{position:absolute;top:2px;right:2px;width:8px;height:8px;background:var(--beige);border-radius:50%;display:none}
-.m-cart-dot.on{display:block}
-.hamburger{background:none;border:none;cursor:pointer;padding:4px;display:flex;flex-direction:column;gap:5px;width:28px}
-.hamburger span{display:block;height:1px;background:var(--dark);transition:all .3s ease;transform-origin:center}
-.hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
-.hamburger.open span:nth-child(2){opacity:0;transform:scaleX(0)}
-.hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+/* Mobile nav */
+.nav-hamburger{display:none;background:none;border:none;cursor:pointer;padding:4px;flex-direction:column;gap:5px}
+.nav-hamburger span{display:block;width:22px;height:1px;background:var(--dark);transition:all .3s}
+.nav-hamburger.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+.nav-hamburger.open span:nth-child(2){opacity:0}
+.nav-hamburger.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
 
-/* ─── MOBILE OVERLAY MENU ─── */
-.mob-menu{display:none;position:fixed;inset:0;z-index:190;background:var(--white);padding-top:56px;flex-direction:column;justify-content:center;align-items:center}
-.mob-menu.open{display:flex}
-.mob-menu ul{list-style:none;text-align:center;width:100%}
-.mob-menu ul li{border-bottom:1px solid var(--border)}
-.mob-menu ul li:first-child{border-top:1px solid var(--border)}
-.mob-menu ul a{display:block;padding:22px 40px;font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:300;font-style:italic;color:var(--dark);text-decoration:none;cursor:pointer;transition:color .2s}
-.mob-menu ul a:active{color:var(--beige)}
-.mob-menu-foot{margin-top:36px;font-size:11px;letter-spacing:.15em;text-transform:uppercase;color:var(--mid)}
+/* Mobile menu overlay */
+.mob-overlay{
+  display:none;position:fixed;inset:0;z-index:99;
+  background:var(--white);
+  padding-top:var(--nav);
+  flex-direction:column;justify-content:center;align-items:center;
+}
+.mob-overlay.open{display:flex}
+.mob-overlay ul{list-style:none;text-align:center;width:100%}
+.mob-overlay ul li{border-bottom:1px solid var(--border)}
+.mob-overlay ul li:first-child{border-top:1px solid var(--border)}
+.mob-overlay ul a{
+  display:block;padding:20px 40px;
+  font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300;font-style:italic;
+  color:var(--dark);text-decoration:none;cursor:pointer;
+}
+.mob-overlay ul a:active{color:var(--beige)}
 
-/* ─── BOTTOM NAV ─── */
-.bot-nav{display:none;position:fixed;bottom:0;left:0;right:0;z-index:200;background:rgba(255,255,255,0.97);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-top:1px solid var(--border);height:var(--bot-h);padding-bottom:env(safe-area-inset-bottom);align-items:center;justify-content:space-around}
-.bn-item{display:flex;flex-direction:column;align-items:center;gap:4px;background:none;border:none;cursor:pointer;padding:8px 12px;color:var(--mid);font-family:'Jost',sans-serif;min-width:56px;transition:color .2s}
-.bn-item.active{color:var(--dark)}
-.bn-item svg{width:20px;height:20px;stroke:currentColor;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
-.bn-label{font-size:9px;letter-spacing:.1em;text-transform:uppercase;font-weight:400}
-.bn-cart-wrap{position:relative}
-.bn-dot{position:absolute;top:6px;right:10px;width:7px;height:7px;background:var(--beige);border-radius:50%;display:none}
-.bn-dot.on{display:block}
-
-/* ─── PAGES ─── */
-.page{display:none;min-height:100vh;padding-top:var(--nav-h)}
+/* ── PAGES ── */
+.page{display:none;padding-top:var(--nav);min-height:100vh}
 .page.active{display:block}
 
-/* ─── HERO ─── */
-.hero{height:calc(100vh - var(--nav-h));position:relative;overflow:hidden;display:flex;align-items:flex-end}
-.hero-bg{position:absolute;inset:0;background:linear-gradient(145deg,#EDE6DA 0%,#D9CEBC 50%,#C8B89A 100%);display:flex;align-items:center;justify-content:center}
-.hero-bg-lbl{font-family:'Cormorant Garamond',serif;font-size:13px;letter-spacing:.25em;color:rgba(255,255,255,.5);text-transform:uppercase;text-align:center;line-height:2.2}
-.hero-content{position:relative;z-index:2;padding:60px 64px;max-width:560px}
-.hero-eyebrow{font-size:10px;letter-spacing:.25em;text-transform:uppercase;color:var(--beige);margin-bottom:18px;display:block}
-.hero-tagline{font-family:'Cormorant Garamond',serif;font-size:clamp(34px,4.5vw,58px);font-weight:300;font-style:italic;color:var(--dark);line-height:1.15;margin-bottom:28px}
-.hero-sub{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);margin-bottom:40px}
-.hero-scroll{position:absolute;bottom:32px;right:48px;z-index:2;writing-mode:vertical-rl;font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--mid);display:flex;align-items:center;gap:10px}
-.hero-scroll::after{content:'';display:block;width:1px;height:40px;background:var(--beige)}
-
-/* ─── BUTTONS ─── */
-.btn{display:inline-flex;align-items:center;gap:10px;padding:15px 38px;font-size:10px;letter-spacing:.18em;text-transform:uppercase;text-decoration:none;cursor:pointer;border:none;transition:all .28s;font-family:'Jost',sans-serif;font-weight:400}
+/* ── HERO ── */
+.hero{
+  height:calc(100vh - var(--nav));
+  position:relative;overflow:hidden;
+  display:flex;align-items:flex-end;
+  background:linear-gradient(145deg,#EDE6DA,#C8B89A);
+}
+.hero-placeholder{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:13px;letter-spacing:.22em;text-transform:uppercase;
+  color:rgba(255,255,255,.5);text-align:center;line-height:2.2;
+}
+.hero-content{
+  position:relative;z-index:2;
+  padding:56px 64px;max-width:540px;
+}
+.hero-eyebrow{font-size:10px;letter-spacing:.24em;text-transform:uppercase;color:var(--beige);margin-bottom:16px;display:block}
+.hero-tagline{
+  font-family:'Cormorant Garamond',serif;
+  font-size:clamp(32px,4.2vw,54px);
+  font-weight:300;font-style:italic;
+  color:var(--dark);line-height:1.15;margin-bottom:36px;
+}
+.btn{
+  display:inline-block;padding:14px 36px;
+  font-family:'Jost',sans-serif;font-size:10px;font-weight:400;
+  letter-spacing:.18em;text-transform:uppercase;
+  text-decoration:none;cursor:pointer;border:none;
+  transition:all .25s;
+}
 .btn-dark{background:var(--dark);color:white}
 .btn-dark:hover{background:var(--beige)}
 .btn-outline{background:transparent;color:var(--dark);border:1px solid rgba(30,30,28,.35)}
-.btn-outline:hover{background:var(--dark);color:white;border-color:var(--dark)}
-.btn-outline-lt{background:transparent;color:white;border:1px solid rgba(255,255,255,.35)}
+.btn-outline:hover{background:var(--dark);color:white}
+.btn-outline-lt{background:transparent;color:white;border:1px solid rgba(255,255,255,.4)}
 .btn-outline-lt:hover{background:white;color:var(--dark)}
 
-/* ─── SECTIONS ─── */
-.section{padding:96px 64px}
+/* ── COLLECTION ── */
+.section{padding:88px 64px}
 .sec-label{font-size:10px;letter-spacing:.22em;text-transform:uppercase;color:var(--beige);margin-bottom:10px;display:block}
-.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(30px,3.5vw,46px);font-weight:300;color:var(--dark);line-height:1.1}
-.sec-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:56px}
+.sec-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.2vw,44px);font-weight:300;line-height:1.1;color:var(--dark)}
+.sec-header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:52px}
 
-/* ─── PRODUCT GRID ─── */
 .prod-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:24px;max-width:1200px;margin:0 auto}
 .prod-card{cursor:pointer}
-.prod-img{aspect-ratio:3/4;overflow:hidden;position:relative;margin-bottom:18px}
-.prod-img-inner{width:100%;height:100%;display:flex;align-items:center;justify-content:center;background:linear-gradient(160deg,#EDE6DA,#D4C8B5);transition:transform .7s ease}
+.prod-img{aspect-ratio:3/4;overflow:hidden;position:relative;margin-bottom:16px;background:var(--light)}
+.prod-img-inner{
+  width:100%;height:100%;
+  background:linear-gradient(160deg,#EDE6DA,#D4C8B5);
+  display:flex;align-items:center;justify-content:center;
+  transition:transform .7s ease;
+}
 .prod-card:hover .prod-img-inner{transform:scale(1.04)}
-.prod-img-lbl{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(0,0,0,.28);letter-spacing:.1em;text-align:center;padding:20px;line-height:1.9}
-.badge{position:absolute;top:16px;left:16px;background:var(--dark);color:white;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 13px;font-family:'Jost',sans-serif;font-weight:400}
+.prod-img-lbl{
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:12px;color:rgba(0,0,0,.28);letter-spacing:.1em;
+  text-align:center;padding:20px;line-height:2;
+}
+.badge{position:absolute;top:14px;left:14px;background:var(--dark);color:white;font-size:9px;letter-spacing:.14em;text-transform:uppercase;padding:5px 12px}
 .badge-soon{background:var(--beige)}
-.prod-name{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:400;margin-bottom:4px}
-.prod-sub{font-size:11px;color:var(--mid);letter-spacing:.08em;margin-bottom:8px}
-.prod-price{font-size:15px;font-weight:400;letter-spacing:.04em}
+.prod-name{font-family:'Cormorant Garamond',serif;font-size:21px;font-weight:400;margin-bottom:3px}
+.prod-sub{font-size:11px;color:var(--mid);letter-spacing:.07em;margin-bottom:7px}
+.prod-price{font-size:14px;font-weight:400;letter-spacing:.04em}
 
-/* ─── IG STRIP ─── */
-.ig-strip{background:var(--dark);padding:80px 64px;text-align:center}
-.ig-strip .sec-label{color:var(--beige)}
-.ig-title{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3.5vw,44px);font-weight:300;font-style:italic;color:white;margin-bottom:32px;line-height:1.2}
+/* ── PRODUCT DETAIL ── */
+.prod-detail{display:grid;grid-template-columns:55% 45%;min-height:calc(100vh - var(--nav))}
 
-/* ─── PRODUCT DETAIL ─── */
-.prod-detail{display:grid;grid-template-columns:55% 45%;min-height:calc(100vh - var(--nav-h))}
-.prod-gallery{background:var(--light-bg);position:sticky;top:var(--nav-h);height:calc(100vh - var(--nav-h));display:flex;flex-direction:column;align-items:center;justify-content:center;padding:48px;gap:16px}
-.gallery-main{width:100%;max-width:480px;aspect-ratio:3/4;background:linear-gradient(150deg,#EDE6DA,#D4C8B5);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:13px;color:rgba(0,0,0,.25);letter-spacing:.1em;text-align:center;padding:20px;line-height:2}
+.prod-gallery{
+  position:sticky;top:var(--nav);
+  height:calc(100vh - var(--nav));
+  background:var(--light);
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  padding:48px;gap:14px;
+}
+.gallery-main{
+  width:100%;max-width:460px;aspect-ratio:3/4;
+  background:linear-gradient(150deg,#EDE6DA,#D4C8B5);
+  display:flex;align-items:center;justify-content:center;
+  font-family:'Cormorant Garamond',serif;font-style:italic;
+  font-size:12px;color:rgba(0,0,0,.22);letter-spacing:.1em;text-align:center;padding:24px;line-height:2;
+}
 .gallery-thumbs{display:flex;gap:8px}
-.g-thumb{width:52px;height:64px;background:var(--border);cursor:pointer;border:1px solid transparent;transition:border-color .2s;font-size:8px;color:var(--mid);display:flex;align-items:center;justify-content:center;text-align:center;letter-spacing:.05em}
+.g-thumb{
+  width:50px;height:62px;background:var(--border);cursor:pointer;
+  border:1px solid transparent;transition:border-color .2s;
+  font-size:8px;color:var(--mid);display:flex;align-items:center;justify-content:center;text-align:center;
+}
 .g-thumb.active{border-color:var(--dark)}
-.prod-info{padding:64px 56px;display:flex;flex-direction:column;gap:24px;border-left:1px solid var(--border)}
-.prod-info .prod-name{font-size:clamp(34px,3vw,50px);font-weight:300;line-height:1.05;margin-bottom:0}
-.prod-info .prod-price{font-size:24px;font-weight:300}
+
+.prod-info{padding:64px 52px;display:flex;flex-direction:column;gap:22px;border-left:1px solid var(--border);overflow-y:auto}
+.prod-info .prod-name{font-size:clamp(32px,2.8vw,48px);font-weight:300;line-height:1.05;margin-bottom:0}
+.prod-info .prod-price{font-size:22px;font-weight:300}
+
 .fur-notice{font-size:11px;color:var(--mid);letter-spacing:.04em;padding:12px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);line-height:1.8}
-.sel-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);display:block;margin-bottom:14px}
+
+.sel-label{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--mid);display:block;margin-bottom:12px}
 .sel-label span{color:var(--dark)}
 .color-opts{display:flex;gap:10px;flex-wrap:wrap}
-.cswatch{width:30px;height:30px;border-radius:50%;cursor:pointer;border:2px solid transparent;outline:2px solid transparent;outline-offset:2px;transition:outline-color .2s}
+.cswatch{width:28px;height:28px;border-radius:50%;cursor:pointer;border:2px solid transparent;outline:2px solid transparent;outline-offset:2px;transition:outline-color .2s}
 .cswatch:hover,.cswatch.active{outline-color:var(--dark)}
 .cswatch[data-c="choc"]{background:#5C3D2E}
 .cswatch[data-c="black"]{background:#1A1A1A}
@@ -130,202 +177,227 @@ body{font-family:'Jost',sans-serif;background:var(--white);color:var(--dark);fon
 .cswatch[data-c="taupe"]{background:#8B7355}
 .cswatch[data-c="wgrey"]{background:#D8D4CE;border-color:var(--border)}
 .cswatch[data-c="bsand"]{background:#C9B38A}
+
 .size-opts{display:flex;gap:8px}
-.sz-btn{min-width:46px;height:46px;border:1px solid var(--border);background:white;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.08em;cursor:pointer;transition:all .2s;padding:0 10px}
+.sz-btn{min-width:44px;height:44px;border:1px solid var(--border);background:white;font-family:'Jost',sans-serif;font-size:12px;letter-spacing:.07em;cursor:pointer;transition:all .2s;padding:0 10px}
 .sz-btn:hover,.sz-btn.active{background:var(--dark);color:white;border-color:var(--dark)}
-.atc-btn{width:100%;padding:18px;background:var(--dark);color:white;border:none;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .25s;font-weight:400}
+
+.atc-btn{width:100%;padding:17px;background:var(--dark);color:white;border:none;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .25s}
 .atc-btn:hover{background:var(--beige)}
 .atc-btn:disabled{background:#C8C8C6;cursor:default}
-.prod-feats{list-style:none;display:flex;flex-direction:column;gap:9px;border-top:1px solid var(--border);padding-top:24px}
+
+.prod-feats{list-style:none;display:flex;flex-direction:column;gap:8px;border-top:1px solid var(--border);padding-top:22px}
 .prod-feats li{font-size:13px;color:var(--mid);padding-left:16px;position:relative;line-height:1.6}
 .prod-feats li::before{content:'—';position:absolute;left:0;color:var(--beige)}
-.cs-notice{background:var(--light-bg);padding:28px 24px;text-align:center;border:1px solid var(--border)}
-.cs-notice p:first-child{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--dark);margin-bottom:6px}
-.cs-notice p:last-child{font-size:12px;color:var(--mid);letter-spacing:.04em}
+
+.cs-notice{background:var(--light);padding:24px;text-align:center;border:1px solid var(--border)}
+.cs-notice p:first-child{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:17px;color:var(--dark);margin-bottom:5px}
+.cs-notice p:last-child{font-size:12px;color:var(--mid)}
 .cs-notice a{color:var(--dark)}
 
-/* ─── ABOUT ─── */
-.about-layout{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - var(--nav-h))}
-.about-img{background:linear-gradient(155deg,#D4C8B5 0%,#C8B89A 60%,#B8A488 100%);display:flex;align-items:center;justify-content:center;min-height:500px}
-.about-img-lbl{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,.4);font-size:13px;letter-spacing:.2em;text-align:center;line-height:2.2}
-.about-text{padding:100px 80px;display:flex;flex-direction:column;justify-content:center}
-.about-text blockquote{font-family:'Cormorant Garamond',serif;font-size:clamp(24px,2.8vw,36px);font-weight:300;font-style:italic;line-height:1.35;margin-bottom:32px;color:var(--dark)}
-.about-text p{font-size:14px;color:var(--mid);line-height:1.9;margin-bottom:16px}
-.signature{font-family:'Pinyon Script',cursive;font-size:42px;color:var(--dark);margin-top:24px;display:block}
+/* ── ABOUT ── */
+.about-layout{display:grid;grid-template-columns:1fr 1fr;min-height:calc(100vh - var(--nav))}
+.about-img{background:linear-gradient(155deg,#D4C8B5,#C8B89A 60%,#B8A488);display:flex;align-items:center;justify-content:center;min-height:500px}
+.about-img-lbl{font-family:'Cormorant Garamond',serif;font-style:italic;color:rgba(255,255,255,.4);font-size:12px;letter-spacing:.2em;text-align:center;line-height:2.4}
+.about-text{padding:96px 80px;display:flex;flex-direction:column;justify-content:center}
+.about-text blockquote{font-family:'Cormorant Garamond',serif;font-size:clamp(22px,2.6vw,34px);font-weight:300;font-style:italic;line-height:1.35;margin-bottom:28px}
+.about-text p{font-size:14px;color:var(--mid);line-height:1.9;margin-bottom:14px}
+.signature{font-family:'Pinyon Script',cursive;font-size:40px;color:var(--dark);margin-top:20px;display:block}
 
-/* ─── FAQ ─── */
-.faq-wrap{max-width:740px;margin:0 auto;padding:80px 40px}
+/* ── FAQ ── */
+.faq-wrap{max-width:720px;margin:0 auto;padding:80px 40px}
 .faq-item{border-bottom:1px solid var(--border)}
-.faq-q{width:100%;background:none;border:none;text-align:left;padding:24px 0;font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;color:var(--dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:20px}
-.faq-icon{width:22px;height:22px;flex-shrink:0;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-family:'Jost',sans-serif;font-size:16px;font-weight:300;color:var(--beige);transition:transform .25s,background .25s}
+.faq-q{width:100%;background:none;border:none;text-align:left;padding:22px 0;font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--dark);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:16px}
+.faq-icon{width:20px;height:20px;flex-shrink:0;border:1px solid var(--border);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:300;color:var(--beige);transition:all .25s;font-family:'Jost',sans-serif}
 .faq-item.open .faq-icon{transform:rotate(45deg);background:var(--dark);color:white;border-color:var(--dark)}
-.faq-a{display:none;padding-bottom:24px;font-size:14px;color:var(--mid);line-height:1.9;max-width:580px}
+.faq-a{display:none;padding-bottom:22px;font-size:14px;color:var(--mid);line-height:1.9}
 .faq-item.open .faq-a{display:block}
 
-/* ─── LEGAL ─── */
-.legal-wrap{max-width:760px;margin:0 auto;padding:80px 40px}
-.legal-wrap h1{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;margin-bottom:44px}
-.legal-wrap h2{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;margin:32px 0 10px}
-.legal-wrap p,.legal-wrap li{font-size:13px;color:var(--mid);line-height:1.85;margin-bottom:8px}
-.legal-wrap ul{padding-left:20px;margin-bottom:10px}
+/* ── LEGAL ── */
+.legal-wrap{max-width:740px;margin:0 auto;padding:80px 40px}
+.legal-wrap h1{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;margin-bottom:40px}
+.legal-wrap h2{font-family:'Cormorant Garamond',serif;font-size:19px;font-weight:400;margin:28px 0 8px}
+.legal-wrap p,.legal-wrap li{font-size:13px;color:var(--mid);line-height:1.85;margin-bottom:7px}
+.legal-wrap ul{padding-left:18px;margin-bottom:8px}
 
-/* ─── PHOTO GUIDE ─── */
-.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:40px}
-.photo-card{background:var(--light-bg);padding:24px 20px;border:1px solid var(--border)}
-.photo-num{font-family:'Cormorant Garamond',serif;font-size:36px;font-weight:300;color:var(--beige);line-height:1;margin-bottom:10px}
-.photo-prod{font-size:10px;letter-spacing:.18em;text-transform:uppercase;color:var(--beige);margin-bottom:6px}
-.photo-color{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:400;color:var(--dark);margin-bottom:8px}
-.photo-desc{font-size:12px;color:var(--mid);line-height:1.7}
+/* ── PHOTO GUIDE ── */
+.photo-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2px;margin-top:36px}
+.photo-card{background:var(--light);padding:22px 18px;border:1px solid var(--border)}
+.photo-num{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:var(--beige);line-height:1;margin-bottom:8px}
+.photo-prod{font-size:9px;letter-spacing:.18em;text-transform:uppercase;color:var(--beige);margin-bottom:5px}
+.photo-color{font-family:'Cormorant Garamond',serif;font-size:17px;font-weight:400;color:var(--dark);margin-bottom:7px}
+.photo-desc{font-size:11px;color:var(--mid);line-height:1.7}
 
-/* ─── CART ─── */
-.cart-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.28);z-index:300;backdrop-filter:blur(2px)}
+/* ── CART ── */
+.cart-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.25);z-index:300;backdrop-filter:blur(2px)}
 .cart-overlay.open{display:block}
-.cart-drawer{position:fixed;top:0;right:-440px;width:440px;height:100vh;background:white;z-index:301;padding:40px;overflow-y:auto;transition:right .32s cubic-bezier(.4,0,.2,1);display:flex;flex-direction:column}
+.cart-drawer{
+  position:fixed;top:0;right:-420px;width:420px;height:100vh;
+  background:white;z-index:301;
+  padding:40px;overflow-y:auto;
+  transition:right .3s cubic-bezier(.4,0,.2,1);
+  display:flex;flex-direction:column;
+}
 .cart-drawer.open{right:0}
-.cart-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:36px}
-.cart-title{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:300}
-.cart-close{background:none;border:1px solid var(--border);width:36px;height:36px;border-radius:50%;font-size:18px;cursor:pointer;color:var(--mid);display:flex;align-items:center;justify-content:center;transition:all .2s}
+.cart-hdr{display:flex;justify-content:space-between;align-items:center;margin-bottom:32px}
+.cart-title{font-family:'Cormorant Garamond',serif;font-size:24px;font-weight:300}
+.cart-close{background:none;border:1px solid var(--border);width:34px;height:34px;border-radius:50%;font-size:18px;cursor:pointer;color:var(--mid);display:flex;align-items:center;justify-content:center;transition:all .2s}
 .cart-close:hover{background:var(--dark);color:white;border-color:var(--dark)}
 .cart-items{flex:1}
-.cart-empty{text-align:center;padding:64px 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--mid)}
-.cart-item{display:flex;gap:16px;padding:20px 0;border-bottom:1px solid var(--border)}
-.cart-thumb{width:76px;height:92px;background:var(--light-bg);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:9px;color:var(--mid);text-align:center;letter-spacing:.05em}
+.cart-empty{text-align:center;padding:60px 0;font-family:'Cormorant Garamond',serif;font-style:italic;font-size:18px;color:var(--mid)}
+.cart-item{display:flex;gap:14px;padding:18px 0;border-bottom:1px solid var(--border)}
+.cart-thumb{width:68px;height:84px;background:var(--light);flex-shrink:0;display:flex;align-items:center;justify-content:center;font-size:8px;color:var(--mid);text-align:center}
 .cart-iinfo{flex:1}
-.cart-iname{font-family:'Cormorant Garamond',serif;font-size:17px;margin-bottom:3px}
-.cart-ivar{font-size:11px;color:var(--mid);letter-spacing:.07em;margin-bottom:8px}
+.cart-iname{font-family:'Cormorant Garamond',serif;font-size:16px;margin-bottom:3px}
+.cart-ivar{font-size:10px;color:var(--mid);letter-spacing:.07em;margin-bottom:7px}
 .cart-irow{display:flex;justify-content:space-between;align-items:center}
-.cart-iprice{font-size:14px;font-weight:400}
+.cart-iprice{font-size:13px}
 .cart-rm{background:none;border:none;font-size:10px;letter-spacing:.1em;color:var(--mid);text-transform:uppercase;cursor:pointer;text-decoration:underline;font-family:'Jost',sans-serif}
-.cart-foot{border-top:1px solid var(--border);padding-top:24px;margin-top:8px}
-.cart-total-row{display:flex;justify-content:space-between;align-items:center;font-family:'Cormorant Garamond',serif;font-size:22px;margin-bottom:6px}
-.cart-ship{font-size:11px;color:var(--mid);margin-bottom:24px;letter-spacing:.04em}
-.checkout-btn{width:100%;padding:18px;background:var(--dark);color:white;border:none;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.22em;text-transform:uppercase;cursor:pointer;transition:background .25s;margin-bottom:12px;font-weight:400}
+.cart-foot{border-top:1px solid var(--border);padding-top:22px;margin-top:8px}
+.cart-total-row{display:flex;justify-content:space-between;font-family:'Cormorant Garamond',serif;font-size:20px;margin-bottom:5px}
+.cart-ship{font-size:11px;color:var(--mid);margin-bottom:20px;letter-spacing:.03em}
+.checkout-btn{width:100%;padding:17px;background:var(--dark);color:white;border:none;font-family:'Jost',sans-serif;font-size:11px;letter-spacing:.2em;text-transform:uppercase;cursor:pointer;transition:background .25s;margin-bottom:10px}
 .checkout-btn:hover{background:var(--beige)}
-.checkout-methods{font-size:11px;color:var(--mid);text-align:center;letter-spacing:.05em}
+.checkout-methods{font-size:10px;color:var(--mid);text-align:center;letter-spacing:.05em}
 
-/* ─── FOOTER ─── */
-footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px;display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:48px}
-.ft-logo{font-family:'Pinyon Script',cursive;font-size:40px;color:white;display:block;margin-bottom:12px;line-height:1}
-.ft-tag{font-size:12px;letter-spacing:.08em;line-height:1.8;color:rgba(255,255,255,.38)}
-.ft-col h4{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--beige);margin-bottom:20px;font-weight:400}
-.ft-col a{display:block;color:rgba(255,255,255,.38);text-decoration:none;font-size:13px;letter-spacing:.04em;margin-bottom:12px;transition:color .2s;cursor:pointer}
+/* ── FOOTER ── */
+footer{background:var(--dark);padding:64px 64px 44px;display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:44px}
+.ft-logo{font-family:'Pinyon Script',cursive;font-size:38px;color:white;display:block;margin-bottom:10px;line-height:1}
+.ft-tag{font-size:12px;letter-spacing:.07em;line-height:1.8;color:rgba(255,255,255,.35)}
+.ft-col h4{font-size:10px;letter-spacing:.2em;text-transform:uppercase;color:var(--beige);margin-bottom:18px;font-weight:400}
+.ft-col a{display:block;color:rgba(255,255,255,.36);text-decoration:none;font-size:13px;letter-spacing:.04em;margin-bottom:10px;transition:color .2s;cursor:pointer}
 .ft-col a:hover{color:white}
-.ft-bottom{background:var(--dark);border-top:1px solid rgba(255,255,255,.08);padding:20px 64px;display:flex;justify-content:space-between;align-items:center}
-.ft-bottom span{font-size:10px;color:rgba(255,255,255,.25);letter-spacing:.08em}
+.ft-bottom{background:var(--dark);border-top:1px solid rgba(255,255,255,.08);padding:18px 64px;display:flex;justify-content:space-between;align-items:center}
+.ft-bottom span{font-size:10px;color:rgba(255,255,255,.22);letter-spacing:.08em}
 
-/* ─── TOAST ─── */
-.toast{position:fixed;bottom:36px;left:50%;transform:translateX(-50%) translateY(20px);background:var(--dark);color:white;padding:14px 32px;font-size:11px;letter-spacing:.14em;text-transform:uppercase;z-index:400;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap}
+/* ── TOAST ── */
+.toast{position:fixed;bottom:32px;left:50%;transform:translateX(-50%) translateY(16px);background:var(--dark);color:white;padding:13px 28px;font-size:11px;letter-spacing:.13em;text-transform:uppercase;z-index:400;opacity:0;transition:opacity .3s,transform .3s;pointer-events:none;white-space:nowrap}
 .toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
 
-/* ─── RESPONSIVE ─── */
-@media(max-width:900px){
-  :root{--nav-h:56px}
-  .nav-d{display:none}
-  .nav-m{display:flex}
-  .bot-nav{display:flex}
-  .page{padding-top:var(--nav-h);padding-bottom:var(--bot-h)}
-  .hero{height:calc(100svh - var(--nav-h))}
-  .hero-content{padding:32px 24px 40px}
-  .hero-scroll{display:none}
-  .section{padding:56px 20px}
-  .sec-header{flex-direction:column;align-items:flex-start;gap:14px;margin-bottom:36px}
-  .prod-grid{grid-template-columns:1fr;gap:32px;max-width:400px;margin:0 auto}
-  .prod-detail{grid-template-columns:1fr}
-  .prod-gallery{position:static;height:auto;aspect-ratio:4/5;padding:28px 20px}
+/* ════════════════════════════
+   MOBILE
+════════════════════════════ */
+@media(max-width:860px){
+  :root{--nav:56px}
+
+  /* Nav */
+  nav{padding:0 20px}
+  .nav-center{display:none}
+  .nav-hamburger{display:flex}
+
+  /* Pages */
+  .page{padding-top:var(--nav)}
+
+  /* Hero */
+  .hero{height:calc(100svh - var(--nav));align-items:flex-end}
+  .hero-content{padding:28px 22px 36px;max-width:100%}
+
+  /* Sections */
+  .section{padding:52px 20px}
+  .sec-header{flex-direction:column;align-items:flex-start;gap:16px;margin-bottom:32px}
+
+  /* Product grid — single column */
+  .prod-grid{grid-template-columns:1fr;max-width:360px;margin:0 auto;gap:36px}
+
+  /* Product detail — stacked, no sticky */
+  .prod-detail{
+    display:block; /* single column, natural flow */
+  }
+  .prod-gallery{
+    position:static;
+    height:auto;
+    aspect-ratio:4/5;
+    padding:0;
+    gap:0;
+  }
+  .gallery-main{
+    max-width:100%;
+    width:100%;
+    height:100%;
+    aspect-ratio:unset;
+    border-radius:0;
+  }
   .gallery-thumbs{display:none}
-  .prod-info{padding:32px 20px 40px;border-left:none;border-top:1px solid var(--border);gap:20px}
-  .about-layout{grid-template-columns:1fr}
-  .about-img{min-height:260px}
-  .about-text{padding:52px 24px}
+
+  .prod-info{
+    padding:28px 20px 48px;
+    border-left:none;
+    border-top:1px solid var(--border);
+    gap:18px;
+    overflow-y:visible;
+  }
+  .prod-info .prod-name{font-size:30px}
+
+  /* About */
+  .about-layout{display:block}
+  .about-img{min-height:240px}
+  .about-text{padding:48px 22px}
+
+  /* Cart drawer full width */
   .cart-drawer{width:100%;right:-100%}
-  footer{grid-template-columns:1fr;padding:48px 24px 32px;gap:28px}
-  .ft-bottom{padding:16px 24px;flex-direction:column;gap:6px;text-align:center}
-  .faq-wrap{padding:52px 20px}
-  .legal-wrap{padding:52px 20px}
-  .ig-strip{padding:56px 24px}
+
+  /* Footer */
+  footer{grid-template-columns:1fr;padding:44px 22px 28px;gap:28px}
+  .ft-bottom{padding:14px 22px;flex-direction:column;gap:5px;text-align:center}
+
+  /* FAQ / Legal */
+  .faq-wrap{padding:48px 20px}
+  .legal-wrap{padding:48px 20px}
+
+  /* Photo guide */
   .photo-grid{grid-template-columns:1fr;gap:2px}
-  .toast{bottom:calc(var(--bot-h) + 16px)}
+
+  /* Toast above thumb home bar */
+  .toast{bottom:28px}
 }
+
 @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important}}
 </style>
 </head>
 <body>
 
-<!-- NAV DESKTOP -->
-<nav class="nav-d">
+<!-- NAV -->
+<nav>
   <a class="nav-logo" href="#" onclick="showPage('home');return false">by Nalie</a>
-  <ul class="nav-links">
+  <ul class="nav-center">
     <li><a onclick="showPage('shop')">Shop</a></li>
     <li><a onclick="showPage('coat')">The Coat</a></li>
     <li><a onclick="showPage('fox')">The Fox</a></li>
     <li><a onclick="showPage('about')">About</a></li>
     <li><a onclick="showPage('faq')">FAQ</a></li>
   </ul>
-  <button class="nav-cart-btn" onclick="openCart()">
-    Warenkorb <span class="cart-badge" id="cartBadge">0</span>
+  <button class="nav-cart" onclick="openCart()">
+    Warenkorb <span class="cart-dot" id="cartDot">0</span>
+  </button>
+  <button class="nav-hamburger" id="hamburger" onclick="toggleMenu()">
+    <span></span><span></span><span></span>
   </button>
 </nav>
 
-<!-- NAV MOBILE -->
-<nav class="nav-m">
-  <a class="nav-logo" href="#" onclick="showPage('home');return false">by Nalie</a>
-  <div class="m-nav-actions">
-    <button class="m-cart-btn" onclick="openCart()">
-      <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-      <span class="m-cart-dot" id="mCartDot"></span>
-    </button>
-    <button class="hamburger" id="hamburger" onclick="toggleMenu()">
-      <span></span><span></span><span></span>
-    </button>
-  </div>
-</nav>
-
 <!-- MOBILE MENU -->
-<div class="mob-menu" id="mobMenu">
+<div class="mob-overlay" id="mobOverlay">
   <ul>
     <li><a onclick="showPage('shop');closeMenu()">Shop</a></li>
     <li><a onclick="showPage('coat');closeMenu()">The Coat</a></li>
     <li><a onclick="showPage('fox');closeMenu()">The Fox</a></li>
     <li><a onclick="showPage('about');closeMenu()">About</a></li>
     <li><a onclick="showPage('faq');closeMenu()">FAQ</a></li>
+    <li><a onclick="openCart();closeMenu()">Warenkorb</a></li>
   </ul>
-  <div class="mob-menu-foot">@bynalie_ · bynalie.com</div>
 </div>
 
-<!-- BOTTOM NAV -->
-<nav class="bot-nav">
-  <button class="bn-item active" id="bn-home" onclick="showPage('home')">
-    <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
-    <span class="bn-label">Home</span>
-  </button>
-  <button class="bn-item" id="bn-shop" onclick="showPage('shop')">
-    <svg viewBox="0 0 24 24"><rect x="2" y="3" width="20" height="14" rx="2"/><line x1="8" y1="21" x2="16" y2="21"/><line x1="12" y1="17" x2="12" y2="21"/></svg>
-    <span class="bn-label">Shop</span>
-  </button>
-  <button class="bn-item" id="bn-about" onclick="showPage('about')">
-    <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-    <span class="bn-label">About</span>
-  </button>
-  <button class="bn-item bn-cart-wrap" onclick="openCart()">
-    <span class="bn-dot" id="bnDot"></span>
-    <svg viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
-    <span class="bn-label">Warenkorb</span>
-  </button>
-</nav>
-
-<!-- ===== HOME ===== -->
+<!-- HOME -->
 <div id="page-home" class="page active">
   <div class="hero">
-    <div class="hero-bg">
-      <div class="hero-bg-lbl">Produktfoto — Eve in The Coat<br>Frontal · Hermès-Setting · Marmor</div>
+    <div class="hero-placeholder">
+      Produktfoto — Eve in The Coat<br>
+      Frontal · Hermès-Setting · Marmor
     </div>
     <div class="hero-content">
       <span class="hero-eyebrow">Berlin · Limited Edition</span>
       <p class="hero-tagline">Pieces made for women who know what they want.</p>
-      <p class="hero-sub">Luxury Fashion · Echtfell · Handverlesen</p>
       <button onclick="showPage('shop')" class="btn btn-dark">Jetzt shoppen</button>
     </div>
-    <span class="hero-scroll">Scroll</span>
   </div>
 
   <div class="section">
@@ -340,7 +412,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px
       <div class="prod-card" onclick="showPage('coat')">
         <div class="prod-img">
           <div class="prod-img-inner">
-            <div class="prod-img-lbl">The Coat<br>Chocolate Brown<br><span style="font-size:11px;opacity:.55">Foto: Frontal · Hotel/Marmor</span></div>
+            <div class="prod-img-lbl">The Coat<br>Chocolate Brown<br><span style="font-size:11px;opacity:.5">Foto: Frontal · Hotel/Marmor</span></div>
           </div>
           <div class="badge">Verfügbar</div>
         </div>
@@ -351,7 +423,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px
       <div class="prod-card" onclick="showPage('fox')">
         <div class="prod-img">
           <div class="prod-img-inner" style="background:linear-gradient(160deg,#E8DDD0,#D4C4B0)">
-            <div class="prod-img-lbl">The Fox<br>Coming Soon<br><span style="font-size:11px;opacity:.55">Foto: KuDamm · City</span></div>
+            <div class="prod-img-lbl">The Fox<br>Coming Soon<br><span style="font-size:11px;opacity:.5">Foto: KuDamm · City</span></div>
           </div>
           <div class="badge badge-soon">Coming Soon</div>
         </div>
@@ -362,14 +434,14 @@ footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px
     </div>
   </div>
 
-  <div class="ig-strip">
-    <span class="sec-label">Instagram</span>
-    <p class="ig-title">"Follow the world."</p>
-    <a href="https://instagram.com/bynalie_" target="_blank" class="btn btn-outline-lt">@bynalie_ öffnen</a>
+  <div style="background:var(--dark);padding:72px 64px;text-align:center">
+    <span class="sec-label" style="color:var(--beige)">Instagram</span>
+    <p style="font-family:'Cormorant Garamond',serif;font-size:clamp(26px,3.2vw,40px);font-weight:300;font-style:italic;color:white;margin:12px 0 28px">@bynalie_</p>
+    <a href="https://instagram.com/bynalie_" target="_blank" class="btn btn-outline-lt">Instagram öffnen</a>
   </div>
 </div>
 
-<!-- ===== SHOP ===== -->
+<!-- SHOP -->
 <div id="page-shop" class="page">
   <div class="section">
     <div class="sec-header">
@@ -381,7 +453,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px
     <div class="prod-grid">
       <div class="prod-card" onclick="showPage('coat')">
         <div class="prod-img">
-          <div class="prod-img-inner"><div class="prod-img-lbl">The Coat<br><span style="opacity:.55;font-size:11px">Foto folgt</span></div></div>
+          <div class="prod-img-inner"><div class="prod-img-lbl">The Coat<br><span style="opacity:.5;font-size:11px">Foto folgt</span></div></div>
           <div class="badge">Verfügbar</div>
         </div>
         <div class="prod-name">The Coat</div>
@@ -390,7 +462,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px
       </div>
       <div class="prod-card" onclick="showPage('fox')">
         <div class="prod-img">
-          <div class="prod-img-inner" style="background:linear-gradient(160deg,#E8DDD0,#D4C4B0)"><div class="prod-img-lbl">The Fox<br><span style="opacity:.55;font-size:11px">Coming Soon</span></div></div>
+          <div class="prod-img-inner" style="background:linear-gradient(160deg,#E8DDD0,#D4C4B0)"><div class="prod-img-lbl">The Fox<br><span style="opacity:.5;font-size:11px">Coming Soon</span></div></div>
           <div class="badge badge-soon">Coming Soon</div>
         </div>
         <div class="prod-name">The Fox</div>
@@ -401,19 +473,19 @@ footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px
   </div>
 </div>
 
-<!-- ===== THE COAT ===== -->
+<!-- THE COAT -->
 <div id="page-coat" class="page">
   <div class="prod-detail">
     <div class="prod-gallery">
       <div class="gallery-main" id="coatImg">
         Produktfoto<br><br>
-        <span style="font-size:11px;opacity:.45">Chocolate Brown · Frontal · Hotel/Marmor</span>
+        <span style="font-size:11px;opacity:.4">Chocolate Brown · Frontal · Hotel/Marmor</span>
       </div>
       <div class="gallery-thumbs">
         <div class="g-thumb active" onclick="setThumb(this,'coatImg','Chocolate Brown · Frontal · Hotel/Marmor')">Brown</div>
-        <div class="g-thumb" onclick="setThumb(this,'coatImg','Detailaufnahme Fellbesatz Ärmel')">Detail</div>
+        <div class="g-thumb" onclick="setThumb(this,'coatImg','Detailaufnahme Fellbesatz')">Detail</div>
         <div class="g-thumb" onclick="setThumb(this,'coatImg','Rückenansicht · Bindegürtel')">Rücken</div>
-        <div class="g-thumb" onclick="setThumb(this,'coatImg','Lifestyle · Hotel · Marmor')">Life</div>
+        <div class="g-thumb" onclick="setThumb(this,'coatImg','Lifestyle · Marmor · Hotel')">Life</div>
       </div>
     </div>
     <div class="prod-info">
@@ -453,13 +525,13 @@ footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px
   </div>
 </div>
 
-<!-- ===== THE FOX ===== -->
+<!-- THE FOX -->
 <div id="page-fox" class="page">
   <div class="prod-detail">
     <div class="prod-gallery" style="background:#EDE7DE">
       <div class="gallery-main" style="background:linear-gradient(150deg,#E5DDD3,#D0C0AA)">
         Produktfoto The Fox<br><br>
-        <span style="font-size:11px;opacity:.45">Taupe/Mink · Von hinten · KuDamm</span>
+        <span style="font-size:11px;opacity:.4">Taupe/Mink · Von hinten · KuDamm</span>
       </div>
     </div>
     <div class="prod-info">
@@ -478,7 +550,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px
         <li>Schnitt: Kurz, hüftlang</li>
         <li>Optik: Horizontale Fellstreifen</li>
         <li>Passform: Regular — Größen XS bis L</li>
-        <li>Farben: Taupe/Mink · Weiß/Hellgrau · Beige/Sand (in Vorbereitung)</li>
+        <li>Farben: Taupe/Mink · Weiß/Hellgrau · Beige/Sand</li>
         <li>Pflege: Nur Fachmann / Pelzreinigung</li>
       </ul>
       <button class="atc-btn" disabled>Coming Soon</button>
@@ -486,7 +558,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px
   </div>
 </div>
 
-<!-- ===== ABOUT ===== -->
+<!-- ABOUT -->
 <div id="page-about" class="page">
   <div class="about-layout">
     <div class="about-img">
@@ -502,171 +574,115 @@ footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px
   </div>
 </div>
 
-<!-- ===== FAQ ===== -->
+<!-- FAQ -->
 <div id="page-faq" class="page">
   <div class="faq-wrap">
     <span class="sec-label">Häufige Fragen</span>
-    <h1 class="sec-title" style="margin-bottom:48px">FAQ</h1>
+    <h1 class="sec-title" style="margin-bottom:44px">FAQ</h1>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">Welche Größe soll ich wählen?<span class="faq-icon">+</span></button>
-      <div class="faq-a">Alle Stücke sind Oversized geschnitten. Eine Größe passt S–L. Bei Unsicherheit einfach per DM fragen — wir helfen dir gerne.</div>
+      <div class="faq-a">Alle Stücke sind Oversized geschnitten. Eine Größe passt S–L. Bei Unsicherheit einfach per DM fragen.</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">Ist das Fell echt?<span class="faq-icon">+</span></button>
-      <div class="faq-a">Ja. Wir verwenden ausschließlich echtes Fell. Unsere Stücke sind keine Fast-Fashion — sie sind für Frauen gemacht, die Qualität über Quantität stellen. Alle Produkte sind gemäß EU-Verordnung Nr. 1007/2011 gekennzeichnet.</div>
+      <div class="faq-a">Ja. Wir verwenden ausschließlich echtes Fell. Alle Produkte sind gemäß EU-Verordnung Nr. 1007/2011 gekennzeichnet.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Kann ich umtauschen oder zurückschicken?<span class="faq-icon">+</span></button>
-      <div class="faq-a">Ja, innerhalb von 14 Tagen in ungetragenem Zustand mit allen Etiketten. Kontakt über Instagram DM oder contact@bynalie.com. Die Rücksendekosten trägt der Käufer.</div>
+      <button class="faq-q" onclick="toggleFaq(this)">Kann ich zurückschicken?<span class="faq-icon">+</span></button>
+      <div class="faq-a">Ja, innerhalb von 14 Tagen in ungetragenem Zustand mit allen Etiketten. Kontakt: contact@bynalie.com oder @bynalie_. Rücksendekosten trägt der Käufer.</div>
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">Wie lange dauert der Versand?<span class="faq-icon">+</span></button>
-      <div class="faq-a">Deutschland: 3–5 Werktage. EU: 5–8 Werktage. Du erhältst eine Tracking-Nummer sobald dein Paket unterwegs ist. Kostenloser Versand ab €200 innerhalb Deutschlands.</div>
+      <div class="faq-a">Deutschland: 3–5 Werktage. EU: 5–8 Werktage. Kostenloser Versand ab €200 innerhalb Deutschlands.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Gibt es noch andere Farben?<span class="faq-icon">+</span></button>
-      <div class="faq-a">Wir arbeiten ständig an neuen Farben und Pieces. Follow @bynalie_ um als Erste zu erfahren wenn neue Pieces verfügbar sind.</div>
+      <button class="faq-q" onclick="toggleFaq(this)">Gibt es andere Farben?<span class="faq-icon">+</span></button>
+      <div class="faq-a">Wir arbeiten ständig an neuen Farben. Follow @bynalie_ um als Erste informiert zu werden.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Welche Zahlungsmethoden gibt es?<span class="faq-icon">+</span></button>
-      <div class="faq-a">Kreditkarte, Apple Pay, Google Pay und PayPal. Alle Zahlungen sind sicher über Shopify Payments / Stripe abgewickelt.</div>
+      <button class="faq-q" onclick="toggleFaq(this)">Welche Zahlungsmethoden?<span class="faq-icon">+</span></button>
+      <div class="faq-a">Kreditkarte, Apple Pay, Google Pay und PayPal — sicher über Shopify Payments / Stripe.</div>
     </div>
     <div class="faq-item">
-      <button class="faq-q" onclick="toggleFaq(this)">Wie pflege ich das Fell richtig?<span class="faq-icon">+</span></button>
-      <div class="faq-a">The Coat: Nur chemische Reinigung. The Fox: Ausschließlich Fachmann / professionelle Pelzreinigung. Nie in der Waschmaschine reinigen und nicht direktem Sonnenlicht aussetzen.</div>
+      <button class="faq-q" onclick="toggleFaq(this)">Wie pflege ich das Fell?<span class="faq-icon">+</span></button>
+      <div class="faq-a">The Coat: Nur chemische Reinigung. The Fox: Ausschließlich professionelle Pelzreinigung. Nie Waschmaschine, nicht direktes Sonnenlicht.</div>
     </div>
   </div>
 </div>
 
-<!-- ===== FOTO-GUIDE ===== -->
+<!-- FOTO GUIDE -->
 <div id="page-photos" class="page">
   <div class="section">
     <span class="sec-label">Shooting Planung</span>
     <h1 class="sec-title" style="margin-bottom:8px">Foto-Guide</h1>
-    <p style="color:var(--mid);font-size:13px;margin-bottom:0">7 Aufnahmen gesamt — kein weißer Studiohintergrund, immer in Eves Welt.</p>
+    <p style="color:var(--mid);font-size:13px">7 Aufnahmen · Kein weißer Studiohintergrund · Immer in Eves Welt</p>
     <div class="photo-grid">
-      <div class="photo-card">
-        <div class="photo-num">01</div>
-        <div class="photo-prod">The Coat</div>
-        <div class="photo-color">Chocolate Brown</div>
-        <div class="photo-desc">Frontal · Hermès-Stil<br>Setting: Marmor / Hotel<br>Licht: Sehr hell<br>Hermès-Tasche sichtbar ✓</div>
-      </div>
-      <div class="photo-card">
-        <div class="photo-num">02</div>
-        <div class="photo-prod">The Coat</div>
-        <div class="photo-color">Black</div>
-        <div class="photo-desc">Frontal<br>Setting: Helle Wand<br>Licht: High Contrast<br>Minimalistisch</div>
-      </div>
-      <div class="photo-card">
-        <div class="photo-num">03</div>
-        <div class="photo-prod">The Coat</div>
-        <div class="photo-color">Beige / Camel</div>
-        <div class="photo-desc">¾ Winkel<br>Setting: Outdoor<br>Licht: Warmes Tageslicht<br>Golden Hour ideal</div>
-      </div>
-      <div class="photo-card">
-        <div class="photo-num">04</div>
-        <div class="photo-prod">The Coat</div>
-        <div class="photo-color">Weiß / Creme</div>
-        <div class="photo-desc">Von hinten<br>Setting: Marmorboden<br>Licht: Clean, bright<br>Bindegürtel sichtbar ✓</div>
-      </div>
-      <div class="photo-card" style="background:#EDE7DE">
-        <div class="photo-num">05</div>
-        <div class="photo-prod">The Fox</div>
-        <div class="photo-color">Taupe / Mink</div>
-        <div class="photo-desc">Von hinten<br>Setting: KuDamm / City<br>Licht: Natürlich<br>Urban Feeling</div>
-      </div>
-      <div class="photo-card" style="background:#EDE7DE">
-        <div class="photo-num">06</div>
-        <div class="photo-prod">The Fox</div>
-        <div class="photo-color">Weiß / Hellgrau</div>
-        <div class="photo-desc">Frontal<br>Setting: Minimaler Hintergrund<br>Licht: Bright & clean<br>Fell-Textur zeigen ✓</div>
-      </div>
-      <div class="photo-card" style="background:#EDE7DE">
-        <div class="photo-num">07</div>
-        <div class="photo-prod">The Fox</div>
-        <div class="photo-color">Beige / Sand</div>
-        <div class="photo-desc">Lifestyle<br>Setting: Outdoor, sonnig<br>Licht: Warm, golden<br>Bewegung erlaubt</div>
-      </div>
+      <div class="photo-card"><div class="photo-num">01</div><div class="photo-prod">The Coat</div><div class="photo-color">Chocolate Brown</div><div class="photo-desc">Frontal · Hermès-Stil<br>Setting: Marmor / Hotel<br>Licht: Sehr hell<br>Hermès-Tasche sichtbar ✓</div></div>
+      <div class="photo-card"><div class="photo-num">02</div><div class="photo-prod">The Coat</div><div class="photo-color">Black</div><div class="photo-desc">Frontal<br>Setting: Helle Wand<br>Licht: High Contrast<br>Minimalistisch</div></div>
+      <div class="photo-card"><div class="photo-num">03</div><div class="photo-prod">The Coat</div><div class="photo-color">Beige / Camel</div><div class="photo-desc">¾ Winkel<br>Setting: Outdoor<br>Licht: Warmes Tageslicht<br>Golden Hour ideal</div></div>
+      <div class="photo-card"><div class="photo-num">04</div><div class="photo-prod">The Coat</div><div class="photo-color">Weiß / Creme</div><div class="photo-desc">Von hinten<br>Setting: Marmorboden<br>Licht: Clean, bright<br>Bindegürtel sichtbar ✓</div></div>
+      <div class="photo-card" style="background:#EDE7DE"><div class="photo-num">05</div><div class="photo-prod">The Fox</div><div class="photo-color">Taupe / Mink</div><div class="photo-desc">Von hinten<br>Setting: KuDamm / City<br>Licht: Natürlich<br>Urban Feeling</div></div>
+      <div class="photo-card" style="background:#EDE7DE"><div class="photo-num">06</div><div class="photo-prod">The Fox</div><div class="photo-color">Weiß / Hellgrau</div><div class="photo-desc">Frontal<br>Setting: Minimaler Hintergrund<br>Licht: Bright & clean<br>Fell-Textur zeigen ✓</div></div>
+      <div class="photo-card" style="background:#EDE7DE"><div class="photo-num">07</div><div class="photo-prod">The Fox</div><div class="photo-color">Beige / Sand</div><div class="photo-desc">Lifestyle<br>Setting: Outdoor, sonnig<br>Licht: Warm, golden<br>Bewegung erlaubt</div></div>
     </div>
   </div>
 </div>
 
-<!-- ===== IMPRESSUM ===== -->
+<!-- IMPRESSUM -->
 <div id="page-impressum" class="page">
   <div class="legal-wrap">
     <h1>Impressum</h1>
     <p>Angaben gemäß § 5 TMG:</p>
     <p><strong>Eve Treis</strong><br>byNalie<br>[Straße und Hausnummer]<br>[PLZ] [Stadt]<br>Deutschland</p>
-    <h2>Kontakt</h2>
-    <p>E-Mail: contact@bynalie.com<br>Instagram: @bynalie_</p>
-    <h2>Umsatzsteuer</h2>
-    <p>Kleinunternehmerin gemäß § 19 UStG. USt-IdNr.: [eintragen]</p>
-    <h2>Verantwortlich für den Inhalt</h2>
-    <p>Eve Treis, [Adresse wie oben]</p>
-    <h2>Streitschlichtung</h2>
-    <p>Plattform der EU-Kommission zur OS: https://ec.europa.eu/consumers/odr</p>
-    <p>Wir sind nicht bereit oder verpflichtet, an Streitbeilegungsverfahren teilzunehmen.</p>
+    <h2>Kontakt</h2><p>E-Mail: contact@bynalie.com<br>Instagram: @bynalie_</p>
+    <h2>Umsatzsteuer</h2><p>Kleinunternehmerin gemäß § 19 UStG. USt-IdNr.: [eintragen]</p>
+    <h2>Verantwortlich</h2><p>Eve Treis, [Adresse wie oben]</p>
+    <h2>Streitschlichtung</h2><p>https://ec.europa.eu/consumers/odr — Wir nehmen nicht teil.</p>
   </div>
 </div>
 
-<!-- ===== AGB ===== -->
+<!-- AGB -->
 <div id="page-agb" class="page">
   <div class="legal-wrap">
     <h1>Allgemeine Geschäftsbedingungen</h1>
-    <h2>§ 1 Geltungsbereich</h2><p>Diese AGB gelten für alle Bestellungen über bynalie.com von Eve Treis (byNalie), [Adresse].</p>
-    <h2>§ 2 Vertragsschluss</h2><p>Der Vertrag kommt zustande wenn wir Ihre Bestellung per E-Mail bestätigen.</p>
-    <h2>§ 3 Preise und Zahlung</h2><p>Alle Preise sind Endpreise in Euro. Als Kleinunternehmerin gem. § 19 UStG wird keine Umsatzsteuer berechnet. Zahlungsmöglichkeiten: Kreditkarte, PayPal, Apple Pay, Google Pay.</p>
-    <h2>§ 4 Versand</h2>
-    <ul>
-      <li>Deutschland: 3–5 Werktage, kostenlos ab €200, darunter €6,90</li>
-      <li>Österreich &amp; Schweiz: €12,90 pauschal, 5–8 Werktage</li>
-      <li>Restliches EU: €18,90 pauschal, 5–8 Werktage</li>
-    </ul>
-    <h2>§ 5 Widerrufsrecht</h2><p>14 Tage ab Erhalt der Ware. Rücksendung nur ungetragen, originalverpackt. Kontakt: contact@bynalie.com oder @bynalie_</p>
-    <h2>§ 6 Produktkennzeichnung Echtfell</h2><p>Gemäß EU-Verordnung Nr. 1007/2011 gekennzeichnet.</p>
-    <h2>§ 7 Eigentumsvorbehalt</h2><p>Die Ware bleibt bis zur vollständigen Bezahlung unser Eigentum.</p>
-    <h2>§ 8 Gewährleistung</h2><p>Gesetzliche Gewährleistungsrechte. Für Pelzpflegeschäden keine Haftung.</p>
-    <h2>§ 9 Schlussbestimmungen</h2><p>Es gilt deutsches Recht. Gerichtsstand: [Stadt Eve's Wohnsitz].</p>
+    <h2>§ 1 Geltungsbereich</h2><p>Alle Bestellungen über bynalie.com von Eve Treis (byNalie), [Adresse].</p>
+    <h2>§ 2 Vertragsschluss</h2><p>Vertrag kommt zustande bei E-Mail-Bestätigung der Bestellung.</p>
+    <h2>§ 3 Preise und Zahlung</h2><p>Endpreise in Euro. Kleinunternehmerin gem. § 19 UStG — keine USt. Zahlung: Kreditkarte, PayPal, Apple Pay, Google Pay.</p>
+    <h2>§ 4 Versand</h2><ul><li>Deutschland: 3–5 Werktage, kostenlos ab €200, darunter €6,90</li><li>Österreich &amp; Schweiz: €12,90 pauschal</li><li>Restliches EU: €18,90 pauschal</li></ul>
+    <h2>§ 5 Widerrufsrecht</h2><p>14 Tage ab Warenerhalt. Rücksendung ungetragen, originalverpackt. contact@bynalie.com oder @bynalie_</p>
+    <h2>§ 6 Echtfell</h2><p>Gemäß EU-Verordnung Nr. 1007/2011 gekennzeichnet.</p>
+    <h2>§ 7–9</h2><p>Eigentumsvorbehalt bis Bezahlung. Gesetzliche Gewährleistung. Deutsches Recht, Gerichtsstand [Stadt].</p>
   </div>
 </div>
 
-<!-- ===== DATENSCHUTZ ===== -->
+<!-- DATENSCHUTZ -->
 <div id="page-datenschutz" class="page">
   <div class="legal-wrap">
     <h1>Datenschutzerklärung</h1>
-    <h2>1. Verantwortlicher</h2><p>Eve Treis (byNalie), [Adresse], contact@bynalie.com</p>
-    <h2>2. Datenerfassung</h2><p>Name, Lieferadresse, E-Mail, Zahlungsdaten zur Auftragsabwicklung. Rechtsgrundlage: Art. 6 Abs. 1 lit. b DSGVO.</p>
-    <h2>3. Shopify / Stripe</h2><p>https://stripe.com/de/privacy</p>
-    <h2>4. PayPal</h2><p>https://www.paypal.com/de/webapps/mpp/ua/privacy-full</p>
-    <h2>5. Instagram</h2><p>Meta Platforms Ireland Ltd. https://privacycenter.instagram.com/policy</p>
-    <h2>6. Cookies</h2><p>Notwendige Cookies für Warenkorb und Checkout.</p>
-    <h2>7. Ihre Rechte</h2><p>Auskunft, Berichtigung, Löschung, Datenportabilität: contact@bynalie.com</p>
-    <h2>8. Beschwerderecht</h2><p>Bei einer Datenschutzaufsichtsbehörde.</p>
+    <h2>Verantwortlicher</h2><p>Eve Treis (byNalie), [Adresse], contact@bynalie.com</p>
+    <h2>Datenerfassung</h2><p>Name, Adresse, E-Mail, Zahlungsdaten zur Auftragsabwicklung. Art. 6 Abs. 1 lit. b DSGVO.</p>
+    <h2>Dienstleister</h2><p>Shopify/Stripe: stripe.com/de/privacy · PayPal: paypal.com/privacy · Instagram/Meta: privacycenter.instagram.com/policy</p>
+    <h2>Cookies</h2><p>Notwendige Cookies für Warenkorb und Checkout.</p>
+    <h2>Ihre Rechte</h2><p>Auskunft, Berichtigung, Löschung: contact@bynalie.com</p>
   </div>
 </div>
 
-<!-- ===== WIDERRUF ===== -->
+<!-- WIDERRUF -->
 <div id="page-widerruf" class="page">
   <div class="legal-wrap">
-    <h1>Widerrufsbelehrung &amp; Rückgabe</h1>
-    <h2>Widerrufsrecht</h2><p>14 Tage ab Erhalt der Ware, ohne Angabe von Gründen.</p>
-    <h2>Widerruf einreichen</h2><p>E-Mail: contact@bynalie.com · Instagram DM: @bynalie_</p>
-    <h2>Bedingungen für Rücksendung</h2>
-    <ul>
-      <li>Ungenutzter, ungetragener Zustand</li>
-      <li>Originalzustand mit allen Etiketten</li>
-      <li>Innerhalb von 14 Tagen nach Widerrufserklärung</li>
-      <li>Rücksendekosten trägt der Käufer</li>
-    </ul>
-    <h2>Rückerstattung</h2><p>Innerhalb von 14 Tagen nach Eingang der Rücksendung auf den ursprünglichen Zahlungsweg.</p>
+    <h1>Widerrufsbelehrung</h1>
+    <h2>Widerrufsrecht</h2><p>14 Tage ab Warenerhalt, ohne Angabe von Gründen.</p>
+    <h2>Kontakt</h2><p>contact@bynalie.com · @bynalie_</p>
+    <h2>Rücksendung</h2><ul><li>Ungetragen, alle Etiketten</li><li>Innerhalb 14 Tage nach Widerruf</li><li>Rücksendekosten trägt der Käufer</li></ul>
+    <h2>Erstattung</h2><p>Innerhalb 14 Tage nach Eingang auf ursprünglichen Zahlungsweg.</p>
   </div>
 </div>
 
-<!-- ===== FOOTER ===== -->
+<!-- FOOTER -->
 <footer>
   <div>
     <span class="ft-logo">by Nalie</span>
-    <p class="ft-tag">Pieces made for women<br>who know what they want.<br><br>Berlin · Luxury Fashion · Limited</p>
+    <p class="ft-tag">Pieces made for women<br>who know what they want.<br><br>Berlin · Luxury Fashion</p>
   </div>
   <div class="ft-col">
     <h4>Shop</h4>
@@ -689,7 +705,7 @@ footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px
   <span>contact@bynalie.com</span>
 </div>
 
-<!-- ===== CART ===== -->
+<!-- CART -->
 <div class="cart-overlay" id="cartOverlay" onclick="closeCart()"></div>
 <div class="cart-drawer" id="cartDrawer">
   <div class="cart-hdr">
@@ -711,28 +727,25 @@ footer{background:var(--dark);color:rgba(255,255,255,.45);padding:72px 64px 48px
 
 <script>
 const st={coat:{color:'Chocolate Brown',size:'S'},fox:{color:'Taupe / Mink',size:'XS'}};
-const cart=[];let menuOpen=false;
+const cart=[];
+let menuOpen=false;
 
 function showPage(id){
   document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
   const el=document.getElementById('page-'+id);
-  if(el)el.classList.add('active');
-  window.scrollTo(0,0);
-  const map={home:'bn-home',shop:'bn-shop',coat:'bn-shop',fox:'bn-shop',about:'bn-about'};
-  document.querySelectorAll('.bn-item').forEach(b=>b.classList.remove('active'));
-  if(map[id])document.getElementById(map[id])?.classList.add('active');
+  if(el){el.classList.add('active');window.scrollTo(0,0);}
   return false;
 }
 
 function toggleMenu(){
   menuOpen=!menuOpen;
-  document.getElementById('mobMenu').classList.toggle('open',menuOpen);
+  document.getElementById('mobOverlay').classList.toggle('open',menuOpen);
   document.getElementById('hamburger').classList.toggle('open',menuOpen);
   document.body.style.overflow=menuOpen?'hidden':'';
 }
 function closeMenu(){
   menuOpen=false;
-  document.getElementById('mobMenu').classList.remove('open');
+  document.getElementById('mobOverlay').classList.remove('open');
   document.getElementById('hamburger').classList.remove('open');
   document.body.style.overflow='';
 }
@@ -741,40 +754,33 @@ function setThumb(th,imgId,label){
   th.closest('.prod-gallery').querySelectorAll('.g-thumb').forEach(t=>t.classList.remove('active'));
   th.classList.add('active');
   const el=document.getElementById(imgId);
-  if(el)el.innerHTML='Produktfoto<br><br><span style="font-size:11px;opacity:.45">'+label+'</span>';
+  if(el)el.innerHTML='Produktfoto<br><br><span style="font-size:11px;opacity:.4">'+label+'</span>';
 }
 
 function selectColor(el,prod,name){
   el.closest('.color-opts').querySelectorAll('.cswatch').forEach(s=>s.classList.remove('active'));
-  el.classList.add('active');
-  st[prod].color=name;
+  el.classList.add('active');st[prod].color=name;
   const lbl=document.getElementById(prod+'ColorLbl');
   if(lbl)lbl.textContent=name;
 }
 function selectSize(el,prod){
   el.closest('.size-opts').querySelectorAll('.sz-btn').forEach(s=>s.classList.remove('active'));
-  el.classList.add('active');
-  st[prod].size=el.textContent;
+  el.classList.add('active');st[prod].size=el.textContent;
 }
 
 function addToCart(prod){
   const p={coat:{name:'The Coat',price:459},fox:{name:'The Fox',price:429}};
   cart.push({id:Date.now(),name:p[prod].name,color:st[prod].color,size:st[prod].size,price:p[prod].price});
-  renderCart();
-  showToast('In den Warenkorb hinzugefügt');
+  renderCart();showToast('In den Warenkorb hinzugefügt');
   setTimeout(()=>openCart(),400);
 }
 function removeFromCart(id){
-  const i=cart.findIndex(x=>x.id===id);
-  if(i>-1)cart.splice(i,1);
-  renderCart();
+  const i=cart.findIndex(x=>x.id===id);if(i>-1)cart.splice(i,1);renderCart();
 }
 function renderCart(){
   const n=cart.length;
-  document.getElementById('cartBadge').textContent=n;
-  document.getElementById('cartBadge').classList.toggle('has-items',n>0);
-  document.getElementById('mCartDot').classList.toggle('on',n>0);
-  document.getElementById('bnDot').classList.toggle('on',n>0);
+  document.getElementById('cartDot').textContent=n;
+  document.getElementById('cartDot').classList.toggle('active',n>0);
   const itemsEl=document.getElementById('cartItems');
   const footEl=document.getElementById('cartFoot');
   if(n===0){itemsEl.innerHTML='<div class="cart-empty">Dein Warenkorb ist leer.</div>';footEl.style.display='none';return;}
@@ -806,7 +812,7 @@ function toggleFaq(btn){
 function showToast(msg){
   const t=document.getElementById('toast');
   t.textContent=msg;t.classList.add('show');
-  setTimeout(()=>t.classList.remove('show'),2800);
+  setTimeout(()=>t.classList.remove('show'),2600);
 }
 </script>
 </body>
