@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>byNalie — Luxury Pieces by Eve Treis</title>
-<meta name="description" content="byNalie — limitierte Luxury Outerwear aus Berlin. The Coat & The Fox. Pieces made for women who know what they want.">
+<meta name="description" content="byNalie — limitierte Luxury Outerwear aus Berlin. The Wrap, The Collar, The Taupe. Pieces made for women who know what they want.">
 <meta property="og:title" content="byNalie — Luxury Pieces by Eve Treis">
 <meta property="og:description" content="Limitierte Luxury Outerwear aus Berlin. Pieces made for women who know what they want.">
 <meta property="og:type" content="website">
@@ -21,8 +21,7 @@
   "itemListElement": [
     {"@type":"Product","position":1,"name":"The Wrap — Wickelmantel mit Fellbesatz","brand":{"@type":"Brand","name":"byNalie"},"offers":{"@type":"Offer","priceCurrency":"EUR","price":"429.00","availability":"https://schema.org/InStock"}},
     {"@type":"Product","position":2,"name":"The Collar — Wollmantel mit XL-Fuchskragen","brand":{"@type":"Brand","name":"byNalie"},"offers":{"@type":"Offer","priceCurrency":"EUR","price":"479.00","availability":"https://schema.org/InStock"}},
-    {"@type":"Product","position":3,"name":"The Taupe — Wollmantel mit XL-Fuchskragen","brand":{"@type":"Brand","name":"byNalie"},"offers":{"@type":"Offer","priceCurrency":"EUR","price":"479.00","availability":"https://schema.org/InStock"}},
-    {"@type":"Product","position":4,"name":"The Coat — Wollmantel mit Fellbesatz","brand":{"@type":"Brand","name":"byNalie"},"offers":{"@type":"Offer","priceCurrency":"EUR","price":"459.00","availability":"https://schema.org/InStock"}}
+    {"@type":"Product","position":3,"name":"The Taupe — Wollmantel mit XL-Fuchskragen","brand":{"@type":"Brand","name":"byNalie"},"offers":{"@type":"Offer","priceCurrency":"EUR","price":"479.00","availability":"https://schema.org/InStock"}}
   ]
 }
 </script>
@@ -244,7 +243,7 @@
 
   /*
     ═══════════ SHOOTING PLAN — HERO ═══════════
-    Hero-Bild: Eve in The Coat, Chocolate Brown.
+    Hero-Bild: Eve in The Collar, Black.
     Frontal, Hermès-inspiriert, Marmor/Hotel-Setting, sehr hell.
     Kein weißer Studiohintergrund — immer in Eves Welt.
     Bild einsetzen: .hero-img-placeholder durch <img> ersetzen
@@ -1381,7 +1380,7 @@
     </div>
     <div class="faq-item">
       <button class="faq-q" onclick="toggleFaq(this)">Wie pflege ich das Fell richtig?</button>
-      <div class="faq-a">The Coat: Nur chemische Reinigung. The Fox: Ausschließlich professionelle Pelzreinigung. Nie in der Waschmaschine reinigen und nicht direktem Sonnenlicht aussetzen.</div>
+      <div class="faq-a">Alle Pieces: Nur chemische Reinigung — der Fellbesatz gehört ausschließlich in professionelle Hände. Nie in der Waschmaschine reinigen und nicht direktem Sonnenlicht aussetzen.</div>
     </div>
   </div>
 </div>
@@ -1602,9 +1601,7 @@ const SHOPIFY_CONFIG = {
   productHandles: {
     wrap:   'the-wrap',
     collar: 'the-collar',
-    taupe:  'the-taupe',
-    coat:   'the-coat'
-    // fox: 'the-fox'  ← aktivieren, sobald The Fox verfügbar ist
+    taupe:  'the-taupe'
   }
 };
 
@@ -1680,48 +1677,10 @@ const PRODUCTS = {
     ],
     views: ['Frontal', 'Kragen-Detail', 'Rücken', 'Lifestyle']
     /* SHOOTING The Taupe: 3/4-Ansicht, Outdoor, warmes Licht. Kein Studio. */
-  },
-  coat: {
-    title: 'The Coat',
-    nameHtml: 'Wollmantel<br>mit Fellbesatz',
-    sub: 'Wollmantel mit Fellbesatz',
-    price: 459,
-    sizes: ['S', 'M', 'L'],
-    colors: {
-      'Chocolate Brown': { hex: '#5C3D2E', stock: { S: 10, M: 0, L: 0 }, variantIds: { S: '', M: '', L: '' } },
-      'White / Cream':   { hex: '#F0EDE8', stock: { S: 2,  M: 0, L: 0 }, variantIds: { S: '', M: '', L: '' } }, // Größe prüfen!
-      'Black':           { hex: '#1A1A1A', stock: { S: 0,  M: 0, L: 0 }, variantIds: { S: '', M: '', L: '' } },
-      'Beige / Camel':   { hex: '#C4A882', stock: { S: 0,  M: 0, L: 0 }, variantIds: { S: '', M: '', L: '' } }
-    },
-    features: [
-      'Material: Hochwertige Wollmischung (80% Wolle, 20% Polyester)',
-      'Fellbesatz: Echtfell an den Ärmeln, abnehmbar per Knopf',
-      'Details: Bindegürtel, breiter Revers-Kragen',
-      'Passform: Oversized',
-      'Pflege: Nur chemische Reinigung',
-      'Versand: 3–5 Werktage · Kostenlos ab €200'
-    ],
-    views: ['Frontal', 'Fell-Detail', 'Rücken', 'Lifestyle']
-  },
-  fox: {
-    title: 'The Fox',
-    nameHtml: 'Fuchspelz-<br>Jacke',
-    sub: 'Fuchspelz-Jacke',
-    price: 429,
-    comingSoon: true,
-    features: [
-      'Material: Echtfuchs',
-      'Schnitt: Kurz, hüftlang',
-      'Optik: Horizontale Fellstreifen',
-      'Passform: Regular — Größen XS bis L',
-      'Farben: Taupe / Mink · Weiß / Hellgrau · Beige / Sand (in Vorbereitung)',
-      'Pflege: Nur professionelle Pelzreinigung'
-    ],
-    views: ['Frontal']
   }
 };
 
-const ORDER = ['wrap', 'collar', 'taupe', 'coat', 'fox'];
+const ORDER = ['wrap', 'collar', 'taupe'];
 const LOW_STOCK_THRESHOLD = 3;
 
 /* ════════ STATE ════════ */
