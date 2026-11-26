@@ -1594,10 +1594,10 @@
    Danach kommen Preise, Bestand und Checkout live aus Shopify.
    ════════════════════════════════════════════════════════════ */
 const SHOPIFY_CONFIG = {
-  enabled: false,
+  enabled: true,
   storeDomain: 'bynalie.myshopify.com',
-  storefrontToken: '',
-  apiVersion: '2024-01',
+  storefrontToken: '6cd280a705cfa399efcef227838e9e8b',
+  apiVersion: '2025-10',
   productHandles: {
     wrap:   'the-wrap',
     collar: 'the-collar',
@@ -1618,10 +1618,10 @@ const PRODUCTS = {
     price: 429,
     sizes: ['S', 'M'],
     colors: {
-      'Oatmeal': { hex: '#D9CDBB', stock: { S: 7, M: 3 }, variantIds: { S: '', M: '' } },
-      'Coffee':  { hex: '#8B6F58', stock: { S: 7, M: 3 }, variantIds: { S: '', M: '' } },
-      'Grau':    { hex: '#9A968F', stock: { S: 3, M: 1 }, variantIds: { S: '', M: '' } },
-      'Weiß':    { hex: '#F0EDE8', stock: { S: 2, M: 0 }, variantIds: { S: '', M: '' } }
+      'Oatmeal': { hex: '#D9CDBB', stock: { S: 7, M: 3 }, variantIds: { S: '60180978139461', M: '60180978172229' } },
+      'Coffee':  { hex: '#8B6F58', stock: { S: 7, M: 3 }, variantIds: { S: '60180978204997', M: '60180978237765' } },
+      'Grau':    { hex: '#9A968F', stock: { S: 3, M: 1 }, variantIds: { S: '60180978270533', M: '60180978303301' } },
+      'Weiß':    { hex: '#F0EDE8', stock: { S: 2, M: 0 }, variantIds: { S: '60180978336069', M: '60180978368837' } }
     },
     features: [
       'Material: Doppelseitige Wolle',
@@ -1642,7 +1642,7 @@ const PRODUCTS = {
     price: 479,
     sizes: ['S', 'M'],
     colors: {
-      'Black': { hex: '#1A1A1A', stock: { S: 3, M: 2 }, variantIds: { S: '', M: '' } }
+      'Black': { hex: '#1A1A1A', stock: { S: 3, M: 2 }, variantIds: { S: '60180978532677', M: '60180978565445' } }
     },
     features: [
       'Material: Doppelseitige Wolle',
@@ -1664,7 +1664,7 @@ const PRODUCTS = {
     price: 479,
     sizes: ['S', 'M'],
     colors: {
-      'Taupe / Brown': { hex: '#8B7355', stock: { S: 5, M: 5 }, variantIds: { S: '', M: '' } }
+      'Taupe / Brown': { hex: '#8B7355', stock: { S: 5, M: 5 }, variantIds: { S: '60180978729285', M: '60180978762053' } }
     },
     features: [
       'Material: Doppelseitige Wolle',
@@ -2048,6 +2048,14 @@ async function goToCheckout() {
       })
     });
     const data = await res.json();
+    const userErrors = data?.data?.cartCreate?.userErrors || [];
+    const gqlErrors = data?.errors || [];
+    if (userErrors.length || gqlErrors.length) {
+      const msg = [...userErrors, ...gqlErrors].map(e => e.message).join(' · ');
+      console.warn('cartCreate Fehler:', userErrors, gqlErrors);
+      showToast('Checkout-Fehler: ' + msg);
+      return;
+    }
     const url = data?.data?.cartCreate?.cart?.checkoutUrl;
     if (url) { window.location.href = url; return; }
     throw new Error('Keine checkoutUrl erhalten');
@@ -2093,13 +2101,16 @@ async function syncWithShopify() {
         const color = opts.find(o => /farbe|color/i.test(o.name))?.value;
         const size = opts.find(o => /größe|grösse|size/i.test(o.name))?.value;
         const p = PRODUCTS[pid];
-        // Produkte mit nur einer Farbe: Shopify hat evtl. nur Option "Größe"
-        const colorKey = color || (p.colors ? Object.keys(p.colors)[0] : null);
+        const localColors = p.colors ? Object.keys(p.colors) : [];
+        // Keine Farb-Option in Shopify (Collar, Taupe): Varianten nur über
+        // die Größe der einzigen lokalen Farbe zuordnen.
+        const colorKey = color ?? (localColors.length === 1 ? localColors[0] : null);
         const colorData = p.colors?.[colorKey];
         if (!colorData || !size) return;
 
         colorData.stock[size] = node.quantityAvailable ?? (node.availableForSale ? 99 : 0);
-        colorData.variantIds[size] = node.id.replace('gid://shopify/ProductVariant/', '');
+        const vid = (node.id || '').replace('gid://shopify/ProductVariant/', '');
+        if (vid) colorData.variantIds[size] = vid; // nie mit leerem Wert überschreiben
         p.price = parseFloat(node.price.amount);
       });
     } catch (err) {
